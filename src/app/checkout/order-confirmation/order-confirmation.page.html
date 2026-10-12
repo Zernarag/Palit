@@ -1,0 +1,28 @@
+<ion-content>
+  @if (checkout.order(); as order) {
+    <div class="order-success section">
+      <div class="success-mark"><app-icon name="check" /></div>
+      <h1 class="display">Order placed!</h1>
+      <p class="small muted">Thank you for shopping local. We'll let you know once your order ships.</p>
+
+      <div class="card pad order-summary">
+        <div class="row between small"><span class="muted">Order ID</span><b class="mono">{{ order.id }}</b></div>
+        <div class="row between small"><span class="muted">Items</span><span>{{ order.items.length }}</span></div>
+        <div class="row between small"><span class="muted">Payment</span><span>{{ order.payment }}</span></div>
+        <div class="row between small"><span class="muted">Deliver to</span><span>{{ order.address?.label ?? 'Home' }}</span></div>
+        <div class="row between small"><span class="muted">Estimated arrival</span><span>3-5 business days</span></div>
+        <div class="divider"></div>
+        <div class="row between"><b>Total</b><span class="price-tag">{{ peso(order.total) }}</span></div>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state no-order">
+      <b>No recent order</b>
+      <p class="small muted">Your order confirmation will appear here after checkout.</p>
+    </div>
+  }
+</ion-content>
+
+<footer class="bottom-bar">
+  <button type="button" class="btn btn-primary" (click)="continueShopping()">Continue shopping</button>
+</footer>

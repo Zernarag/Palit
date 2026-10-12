@@ -1,0 +1,16 @@
+.page-content { --background: var(--canvas); }
+
+.controls-row {
+  padding: 12px 16px 0;
+}
+
+.filter-panel {
+  margin: 12px 16px 0;
+}
+
+.empty-svg {
+  width: 44px;
+  height: 44px;
+  stroke: var(--ink-faint);
+  fill: none;
+}

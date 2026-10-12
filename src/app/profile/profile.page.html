@@ -1,0 +1,39 @@
+<ion-content [fullscreen]="true" class="page-content profile-page">
+  <header class="profile-hero">
+    <div class="profile-avatar"><app-icon name="user" /></div>
+    <div class="identity">
+      <h1>{{ user.name }}</h1>
+      <p>{{ user.email }}</p>
+    </div>
+    <a class="edit-btn" routerLink="/edit-profile" aria-label="Edit profile" title="Edit profile">
+      <app-icon name="edit" />
+    </a>
+    <div class="member-stats">
+      <div><b>{{ user.points.toLocaleString() }}</b><span>Points</span></div>
+      <div><b>{{ user.coupons }}</b><span>Coupons</span></div>
+      <div><b>{{ user.tier }}</b><span>Tier</span></div>
+    </div>
+  </header>
+
+  <section class="profile-section">
+    <h2 class="section-title">Your account</h2>
+    <nav class="profile-links" aria-label="Account">
+      <a routerLink="/cart"><app-icon name="cart" /><span>My Cart</span><b>›</b></a>
+      <a routerLink="/order-history"><app-icon name="truck" /><span>My Orders</span><b>›</b></a>
+      <a routerLink="/wishlist"><app-icon name="heart" /><span>Wishlist</span><b>›</b></a>
+      <a routerLink="/rewards"><app-icon name="star" /><span>Rewards &amp; Points</span><b>›</b></a>
+      <a routerLink="/coupons"><app-icon name="ticket" /><span>My Coupons</span><b>›</b></a>
+      <a routerLink="/address"><app-icon name="pin" /><span>Address Book</span><b>›</b></a>
+      <a routerLink="/payment-method"><app-icon name="card" /><span>Payment Methods</span><b>›</b></a>
+    </nav>
+
+    <h2 class="section-title secondary-heading">Support &amp; preferences</h2>
+    <nav class="profile-links" aria-label="Support and preferences">
+      <a routerLink="/notifications"><app-icon name="bell" /><span>Notifications</span><b>›</b></a>
+      <a routerLink="/help-center"><app-icon name="question" /><span>Help Center</span><b>›</b></a>
+      <a routerLink="/settings"><app-icon name="settings" /><span>Settings</span><b>›</b></a>
+    </nav>
+
+    <button class="btn btn-danger logout" type="button" (click)="logout()">Log out</button>
+  </section>
+</ion-content>

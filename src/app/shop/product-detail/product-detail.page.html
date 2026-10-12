@@ -1,0 +1,115 @@
+<ion-header class="ion-no-border" style="position: absolute; width: 100%; top: 0; left: 0; z-index: 100; pointer-events: none;">
+  <ion-toolbar style="--background: transparent; pointer-events: none;">
+    <div class="hero-actions" style="pointer-events: auto;">
+      <button class="iconbtn" (click)="back()" aria-label="Go back">
+        <svg class="icon"><use href="#icon-back"/></svg>
+      </button>
+      <div class="row" style="gap: 8px;">
+        <button class="iconbtn" (click)="share()" aria-label="Share">
+          <svg class="icon"><use href="#icon-share"/></svg>
+        </button>
+        <button class="iconbtn" (click)="toggleHeart()" aria-label="Wishlist">
+          <svg class="icon"
+               [style.stroke]="isWished ? 'var(--guava)' : 'var(--ink-faint)'"
+               [style.fill]="isWished ? 'var(--guava)' : 'none'">
+            <use href="#icon-heart"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="hero-wrap">
+    <img [src]="product.img" [alt]="product.name" class="hero-image">
+
+    <div class="hero-badge" *ngIf="product.badge">
+      <span class="badge" [ngClass]="product.badge.cls">{{ product.badge.txt }}</span>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top: 16px;">
+
+    <div class="row between" style="align-items: flex-start;">
+      <div class="eyebrow">{{ product.cat }}</div>
+      <div class="row small" style="gap: 4px;">
+        <span class="stars">★★★★★</span>
+        <span class="small muted">{{ product.rating }} ({{ product.reviews }} reviews)</span>
+      </div>
+    </div>
+
+    <h1 class="display" style="font-size: 20px; margin-top: 6px;">
+      <span class="mall-tag" *ngIf="product.mall">Mall</span>{{ product.name }}
+    </h1>
+
+    <div class="row" style="gap: 2px; margin-top: 12px; align-items: baseline;">
+      <span class="price-tag lg">{{ formatPrice(product.price) }}</span>
+      <span class="price-old" *ngIf="product.old">{{ formatPrice(product.old) }}</span>
+      <span class="disc-chip" *ngIf="product.old">-{{ discountPct }}%</span>
+    </div>
+    <div class="small faint" style="margin-top: 8px;">{{ product.sold }} sold</div>
+
+    <div class="divider"></div>
+
+    <div class="small" style="font-weight: 700; margin-bottom: 10px;">Color / Variant</div>
+    <div class="hscroll">
+      <div class="chip"
+           *ngFor="let v of product.variants; let i = index"
+           [class.active]="variantIndex === i"
+           (click)="selectVariant(i)">{{ v }}</div>
+    </div>
+
+    <div class="small" style="font-weight: 700; margin: 16px 0 10px;">Quantity</div>
+    <div class="row between">
+      <div class="qty">
+        <button (click)="changeQty(-1)">−</button>
+        <span>{{ qty }}</span>
+        <button (click)="changeQty(1)">+</button>
+      </div>
+      <span class="small faint">{{ product.stock }} in stock</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="small" style="font-weight: 700; margin-bottom: 8px;">Description</div>
+    <div class="small muted" style="line-height: 1.6;">{{ product.desc }}</div>
+
+    <div class="divider"></div>
+
+    <div class="row between" (click)="openReviews()" style="cursor: pointer;">
+      <div class="row" style="gap: 8px;">
+        <span class="stars">★★★★★</span>
+        <b class="small">{{ product.rating }}</b>
+        <span class="small muted">({{ product.reviews }} reviews)</span>
+      </div>
+      <span class="link small">See all ›</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2 class="section-title" style="font-size: 15px;">You Might Also Like</h2>
+    <div class="grid2" style="margin-top: 12px;">
+      <div class="pcard" *ngFor="let r of related" (click)="openRelated(r.id)">
+        <div class="pimg-wrap"><img [src]="r.img" [alt]="r.name" loading="lazy"></div>
+        <div class="pbody">
+          <div class="pname">{{ r.name }}</div>
+          <div class="prow"><span class="price-tag">{{ formatPrice(r.price) }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 100px;"></div>
+</ion-content>
+
+<ion-footer class="sticky-footer">
+  <div class="sticky-bar">
+    <button class="iconbtn" style="width: 50px; height: 50px; border-radius: 16px;">
+      <svg class="icon"><use href="#icon-chat"/></svg>
+    </button>
+    <button class="btn btn-ghost" (click)="addToCartNow()">Add to Cart</button>
+    <button class="btn btn-accent" (click)="buyNow()">Buy Now</button>
+  </div>
+</ion-footer>

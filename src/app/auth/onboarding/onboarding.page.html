@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="ob-wrap">
+
+    <div class="ob-slide">
+      <div class="ob-icon-tile">
+        <svg class="ob-icon" aria-hidden="true">
+          <use [attr.href]="'#' + slides[index].icon"/>
+        </svg>
+      </div>
+      <h1 class="display ob-title">{{ slides[index].title }}</h1>
+      <p class="ob-body">{{ slides[index].body }}</p>
+    </div>
+
+    <div class="ob-footer">
+      <div class="ob-dots">
+        <span
+          *ngFor="let s of slides; let i = index"
+          class="dot"
+          [class.active]="i === index"
+          (click)="goto(i)">
+        </span>
+      </div>
+
+      <button class="btn btn-primary" (click)="next()">
+        {{ isLast ? 'Get Started' : 'Next' }}
+      </button>
+
+      <div class="center skip-row">
+        <span class="link" (click)="skip()">Skip</span>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

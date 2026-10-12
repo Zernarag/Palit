@@ -1,0 +1,86 @@
+/* ===================== ONBOARDING ===================== */
+.page-content { --background: var(--canvas); }
+
+.ob-wrap {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--canvas);
+}
+
+.ob-slide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 32px;
+}
+
+.ob-icon-tile {
+  width: 128px;
+  height: 128px;
+  border-radius: 36px;
+  background: var(--palm-xlight);
+  border: 2px solid var(--palm-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(240, 78, 26, 0.14);
+}
+
+.ob-icon {
+  width: 60px;
+  height: 60px;
+  stroke: var(--palm);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ob-title {
+  margin-top: 32px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.ob-body {
+  margin-top: 12px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  font-size: 15px;
+  max-width: 300px;
+}
+
+.ob-footer {
+  padding: 0 24px 36px;
+}
+
+.ob-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--line);
+    transition: width var(--tx-base), background var(--tx-base);
+    cursor: pointer;
+
+    &.active {
+      width: 24px;
+      background: var(--palm);
+    }
+  }
+}
+
+.skip-row { margin-top: 14px; }

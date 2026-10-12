@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar bordered">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title">Order Details</div>
+  </div>
+
+  <div class="section" style="padding-top: 16px;">
+
+    <!-- ============ HEADER ============ -->
+    <div class="card pad row between">
+      <div>
+        <div class="small faint">Order Number</div>
+        <b class="small">{{ order?.id }}</b>
+      </div>
+      <span class="badge badge-new">{{ order?.status }}</span>
+    </div>
+
+    <!-- ============ ITEMS ============ -->
+    <div class="card pad" style="margin-top: 12px;">
+      <div class="small" style="font-weight: 700; margin-bottom: 12px;">
+        Items
+      </div>
+
+      <ng-container *ngFor="let line of order?.items">
+        <div class="row item-row" *ngIf="findProduct(line.id) as p">
+          <img [src]="p.img" [alt]="p.name" class="item-thumb">
+          <div style="flex: 1;">
+            <div class="small" style="font-weight: 600;">{{ p.name }}</div>
+            <div class="small faint">
+              <span *ngIf="line.variant">{{ line.variant }} · </span>×{{ line.qty }}
+            </div>
+          </div>
+          <span class="small">{{ formatPrice(p.price * line.qty) }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- ============ SHIP + PAY ============ -->
+    <div class="card pad" style="margin-top: 12px;">
+      <div class="row between small" style="margin-bottom: 8px;">
+        <span class="muted">Ship to</span>
+        <span>{{ order?.address?.label || 'Home' }}</span>
+      </div>
+      <div class="row between small" style="margin-bottom: 8px;">
+        <span class="muted">Payment</span>
+        <span>{{ order?.payment || 'GCash' }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="row between">
+        <b>Total</b>
+        <span class="price-tag">{{ formatPrice(order?.total || 0) }}</span>
+      </div>
+    </div>
+
+    <!-- ============ PRIMARY ACTIONS ============ -->
+    <div class="row" style="gap: 10px; margin-top: 16px;">
+      <button class="btn btn-outline" (click)="requestReturn()">
+        Return / Refund
+      </button>
+      <button class="btn btn-primary" (click)="buyAgain()">
+        Buy Again
+      </button>
+    </div>
+
+    <!-- ============ SECONDARY ACTIONS ============ -->
+    <button class="btn btn-ghost"
+            style="margin-top: 10px;"
+            *ngIf="order?.status !== 'Delivered'"
+            (click)="trackOrder()">
+      Track Order
+    </button>
+
+    <button class="btn btn-ghost"
+            style="margin-top: 10px;"
+            (click)="downloadInvoice()">
+      Download Invoice
+    </button>
+
+  </div>
+</ion-content>

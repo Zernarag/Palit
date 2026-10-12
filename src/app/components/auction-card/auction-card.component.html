@@ -1,0 +1,33 @@
+<div class="acard" (click)="onCardClick()">
+
+  <div class="aimg-wrap">
+    <img [src]="auction.img" [alt]="auction.name" loading="lazy">
+
+    <span class="countdown-chip" [class.ending]="isEnding">
+      {{ countdown }}
+    </span>
+
+    <button class="watch-btn"
+            (click)="onWatch($event)"
+            [attr.aria-label]="isWatched ? 'Remove from watchlist' : 'Add to watchlist'">
+      <svg class="icon heart-svg"
+           [style.stroke]="isWatched ? 'var(--guava)' : 'var(--ink-faint)'"
+           [style.fill]="isWatched ? 'var(--guava)' : 'none'">
+        <use href="#icon-heart"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="abody">
+    <div class="aname">{{ auction.name }}</div>
+
+    <div class="current-bid-label">Current Bid</div>
+    <div class="prow">
+      <span class="price-tag">{{ formatPrice(auction.currentBid) }}</span>
+    </div>
+
+    <div class="bid-count">
+      {{ auction.bidCount }} bid{{ auction.bidCount === 1 ? '' : 's' }} · {{ auction.condition }}
+    </div>
+  </div>
+</div>

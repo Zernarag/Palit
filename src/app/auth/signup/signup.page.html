@@ -1,0 +1,57 @@
+<div class="page">
+  <header class="topbar">
+    <button class="iconbtn" (click)="goBack()" aria-label="Back">
+      <svg class="icon" viewBox="0 0 24 24">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+    </button>
+    <h1 class="topbar-title">Create account</h1>
+    <span class="spacer"></span>
+  </header>
+
+  <form class="body" (ngSubmit)="createAccount()" autocomplete="off">
+    <div class="field">
+      <label for="fullName">Full name</label>
+      <input id="fullName" class="input" type="text"
+             [(ngModel)]="fullName" name="fullName"
+             placeholder="" required />
+    </div>
+
+    <div class="field">
+      <label for="mobile">Mobile number</label>
+      <input id="mobile" class="input" type="tel"
+             [(ngModel)]="mobile" name="mobile"
+             placeholder="" required />
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" class="input" type="email"
+             [(ngModel)]="email" name="email"
+             placeholder="" required />
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" class="input" type="password"
+             [(ngModel)]="password" name="password"
+             placeholder="Min. 8 characters" minlength="8" required />
+    </div>
+
+    <label class="terms small muted">
+      <input type="checkbox" [(ngModel)]="agree" name="agree" />
+      <span>I agree to the Terms of Service and Privacy Policy</span>
+    </label>
+
+    <button type="submit" class="btn btn-primary"
+            [disabled]="!agree || submitting">
+      {{ submitting ? 'Creating account…' : 'Create Account' }}
+    </button>
+
+    <p class="center small muted mt-5">
+      Already have an account?
+      <a class="link" routerLink="/login">Log in</a>
+    </p>
+  </form>
+</div>

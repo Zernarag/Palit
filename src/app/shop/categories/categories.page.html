@@ -1,0 +1,67 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar bordered">
+    <button class="iconbtn" type="button" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title">Palit Mall</div>
+    <button class="iconbtn" (click)="goTo('/search')" aria-label="Search">
+      <svg class="icon"><use href="#icon-search"/></svg>
+    </button>
+    <button class="iconbtn" (click)="goTo('/cart')" aria-label="Cart">
+      <svg class="icon"><use href="#icon-cart"/></svg>
+    </button>
+  </div>
+
+  <div class="mall-banner">
+    <svg class="mall-icon"><use href="#icon-shield"/></svg>
+    <div class="small">
+      <b style="color: var(--mango);">100% Authentic</b> · Official brand stores, verified quality
+    </div>
+  </div>
+
+  <div class="category-scroll hscroll" role="group" aria-label="Shop categories">
+    <button class="chip mall-category"
+            type="button"
+            [class.active]="selected === null"
+            [attr.aria-pressed]="selected === null"
+            (click)="select(null)">
+      <span>All</span>
+    </button>
+    <button class="chip mall-category"
+            type="button"
+            *ngFor="let c of categories; let i = index"
+            [class.active]="i === selected"
+            [attr.aria-pressed]="i === selected"
+            (click)="select(i)">
+      <svg class="icon icon-sm" aria-hidden="true"><use [attr.href]="'#' + c.icon"/></svg>
+      <span>{{ c.name }}</span>
+    </button>
+  </div>
+
+  <div class="panel">
+    <div class="row between" style="margin-bottom: 12px;">
+      <h2 class="section-title" style="font-size: 16px;">{{ selected === null ? 'All' : categories[selected].name }}</h2>
+      <span class="link small" (click)="openListing()">See all</span>
+    </div>
+
+    <div class="grid2">
+      <div class="pcard" *ngFor="let p of products" (click)="openProduct(p.id)">
+        <div class="pimg-wrap">
+          <img [src]="p.img" [alt]="p.name" loading="lazy">
+          <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+        </div>
+        <div class="pbody">
+          <div class="pname">{{ p.name }}</div>
+          <div class="row" style="gap: 4px;">
+            <span class="stars">{{ starStr(p.rating) }}</span>
+            <span class="small faint">{{ p.rating }}</span>
+          </div>
+          <div class="prow">
+            <span class="price-tag">{{ formatPrice(p.price) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,161 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <!-- ============ TOP BAR ============ -->
+  <div class="topbar home-topbar">
+    <img class="home-logo" src="assets/icon/logo-white.png" alt="Palit">
+
+    <div class="searchbar" (click)="goTo('/search')">
+      <svg class="icon"><use href="#icon-search"/></svg>
+      <span>Search</span>
+    </div>
+
+    <button class="iconbtn" (click)="goTo('/notifications')" aria-label="Notifications">
+      <svg class="icon"><use href="#icon-bell"/></svg>
+    </button>
+
+    <button class="iconbtn" (click)="goTo('/cart')" aria-label="Cart">
+      <svg class="icon"><use href="#icon-cart"/></svg>
+      <span class="cart-badge-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+    </button>
+  </div>
+
+  <!-- ============ CATEGORY CHIPS ============ -->
+  <div class="hscroll chips-row">
+    <div class="chip active">All</div>
+    <div class="chip" *ngFor="let c of categories" (click)="openCategory(c.id)">
+      <svg class="icon icon-sm" aria-hidden="true">
+        <use [attr.href]="'#' + c.icon"/>
+      </svg>
+      <span>{{ c.name }}</span>
+    </div>
+  </div>
+
+  <!-- ============ HERO BANNER ============ -->
+  <div class="section">
+    <div class="card pad hero-banner">
+      <div class="hero-content">
+        <div class="eyebrow hero-eyebrow">8.8 Sale</div>
+        <div class="display hero-title">
+          Up to 50% off<br>local finds
+        </div>
+        <button class="btn btn-sm hero-btn" (click)="goTo('/flash-sale')">
+          Shop Now
+        </button>
+      </div>
+
+      <svg class="hero-bag" aria-hidden="true">
+        <use href="#icon-shopping-bag"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ============ SHOP BY CATEGORY ============ -->
+  <div class="section section-header">
+    <h2 class="section-title">Shop by Category</h2>
+    <span class="link small" (click)="goTo('/categories')">See all</span>
+  </div>
+
+  <div class="section" style="padding-top: 12px;">
+    <div class="hscroll">
+      <div class="cat-item" *ngFor="let c of categories" (click)="openCategory(c.id)">
+        <div class="cat-icon">
+          <svg class="cat-svg" aria-hidden="true">
+            <use [attr.href]="'#' + c.icon"/>
+          </svg>
+        </div>
+        <div class="small cat-name">{{ c.name }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FLASH SALE ============ -->
+  <div class="section section-header">
+    <div class="row" style="gap: 8px;">
+      <svg class="icon icon-flash" aria-hidden="true">
+        <use href="#icon-bolt"/>
+      </svg>
+      <h2 class="section-title">Flash Sale</h2>
+    </div>
+    <span class="link small" (click)="goTo('/flash-sale')">See all</span>
+  </div>
+
+  <div class="section" style="padding-top: 12px;">
+    <div class="small" style="margin-bottom: 12px;">
+      <span class="badge badge-sale">ENDS IN</span>
+      <b class="countdown-text">02:14:37</b>
+    </div>
+
+    <div class="hscroll">
+      <div class="hcard-wrap" *ngFor="let p of flashProducts">
+        <div class="pcard" (click)="openProduct(p.id)">
+          <div class="pimg-wrap">
+            <img [src]="p.img" [alt]="p.name" loading="lazy">
+            <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">
+              {{ p.badge.txt }}
+            </span>
+            <button class="heart" (click)="onHeart(p.id, $event)" aria-label="Add to wishlist">
+              <svg class="icon heart-svg"
+                   [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'"
+                   [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'">
+                <use href="#icon-heart"/>
+              </svg>
+            </button>
+          </div>
+          <div class="pbody">
+            <div class="pname">{{ p.name }}</div>
+            <div class="row" style="gap: 4px;">
+              <span class="stars">{{ starStr(p.rating) }}</span>
+              <span class="small faint">{{ p.rating }}</span>
+            </div>
+            <div class="prow">
+              <span class="price-tag">{{ formatPrice(p.price) }}</span>
+              <span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span>
+            </div>
+            <div class="pmeta">{{ p.sold }} sold</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDED ============ -->
+  <div class="section section-header">
+    <h2 class="section-title">Recommended for You</h2>
+  </div>
+
+  <div class="section" style="padding-top: 12px;">
+    <div class="grid2">
+      <div class="pcard" *ngFor="let p of recommended" (click)="openProduct(p.id)">
+        <div class="pimg-wrap">
+          <img [src]="p.img" [alt]="p.name" loading="lazy">
+          <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">
+            {{ p.badge.txt }}
+          </span>
+          <button class="heart" (click)="onHeart(p.id, $event)" aria-label="Add to wishlist">
+            <svg class="icon heart-svg"
+                 [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'"
+                 [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'">
+              <use href="#icon-heart"/>
+            </svg>
+          </button>
+        </div>
+        <div class="pbody">
+          <div class="pname">
+            <span class="mall-tag" *ngIf="p.mall">Mall</span>{{ p.name }}
+          </div>
+          <div class="row" style="gap: 4px;">
+            <span class="stars">{{ starStr(p.rating) }}</span>
+            <span class="small faint">{{ p.rating }}</span>
+          </div>
+          <div class="prow">
+            <span class="price-tag">{{ formatPrice(p.price) }}</span>
+            <span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span>
+          </div>
+          <div class="pmeta">{{ p.sold }} sold</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 40px;"></div>
+</ion-content>

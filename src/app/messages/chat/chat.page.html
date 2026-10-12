@@ -1,0 +1,17 @@
+<header class="topbar bordered chat-topbar">
+  <button class="iconbtn" type="button" (click)="back()" aria-label="Back to messages"><svg class="icon"><use href="#icon-back" /></svg></button>
+  <span class="avatar"><svg class="icon"><use [attr.href]="'#' + conversation.avatar" /></svg></span>
+  <span class="chat-identity"><b>{{ conversation.name }}</b><small>{{ conversation.status }}</small></span>
+  <button class="iconbtn" type="button" routerLink="/help-center" aria-label="Help"><svg class="icon"><use href="#icon-question" /></svg></button>
+</header>
+
+<ion-content class="chat-content">
+  <div class="chat-log" aria-live="polite">
+    <div *ngFor="let message of messages" class="bubble" [class.mine]="message.from === 'me'">{{ message.text }}</div>
+  </div>
+</ion-content>
+
+<form class="composer" (ngSubmit)="send()">
+  <input class="input" name="message" [(ngModel)]="draft" placeholder="Type a message" aria-label="Message">
+  <button type="submit" class="send-button" [disabled]="!draft.trim()" aria-label="Send message"><svg class="icon"><use href="#icon-arrow-right" /></svg></button>
+</form>

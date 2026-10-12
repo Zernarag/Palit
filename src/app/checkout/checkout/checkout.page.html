@@ -1,0 +1,96 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">Review order</div>
+</header>
+
+<ion-content>
+  @if (!cart.lines().length) {
+    <div class="empty-state empty">
+      <div class="empty-emoji"><app-icon name="cart" /></div>
+      <b>Nothing to check out</b>
+      <div class="small muted">Your cart is empty.</div>
+      <button type="button" class="btn btn-primary start-shopping" (click)="continueShopping()">Start shopping</button>
+    </div>
+  } @else {
+    <div class="section review-stack">
+      <div class="step-label">Final step <span>Review your order</span></div>
+      <section>
+        <div class="row between section-heading">
+          <h2 class="section-title">Delivery</h2>
+          <button type="button" class="link small" (click)="editAddress()">Edit</button>
+        </div>
+        <div class="card pad summary-choice">
+          <app-icon name="pin" />
+          <div class="choice-copy">
+            <b class="small">{{ checkout.address().label }} · {{ checkout.address().name }}</b>
+            <span class="small faint">{{ checkout.address().phone }}</span>
+            <span class="small muted">{{ checkout.address().line }}</span>
+          </div>
+        </div>
+        <div class="card pad summary-choice delivery-summary">
+          <app-icon name="truck" />
+          <div class="choice-copy">
+            <b class="small">{{ checkout.delivery().name }}</b>
+            <span class="small faint">{{ checkout.delivery().eta }}</span>
+          </div>
+          <span class="small">{{ peso(checkout.shipping()) }}</span>
+        </div>
+      </section>
+      <section>
+        <div class="row between section-heading">
+          <h2 class="section-title">Payment</h2>
+          <button type="button" class="link small" (click)="editPayment()">Edit</button>
+        </div>
+        <div class="card pad summary-choice">
+          <app-icon [name]="checkout.payment().icon" />
+          <b class="small">{{ checkout.payment().name }}</b>
+        </div>
+      </section>
+      <section>
+        <div class="row between section-heading">
+          <h2 class="section-title">Items</h2>
+          <button type="button" class="link small" (click)="goCart()">Edit cart</button>
+        </div>
+        <div class="card pad item-list">
+          @for (line of cart.lines(); track line.index) {
+            <div class="order-line">
+              <img [src]="line.product.img" [alt]="line.product.name" />
+              <div class="line-copy">
+                <b class="small line-name">{{ line.product.name }}</b>
+                <span class="small faint">@if (line.item.variant) { {{ line.item.variant }} · }×{{ line.item.qty }}</span>
+              </div>
+              <span class="small">{{ peso(line.lineTotal) }}</span>
+            </div>
+          }
+        </div>
+      </section>
+      <section>
+        <div class="row between section-heading">
+          <h2 class="section-title">Payment summary</h2>
+          <button type="button" class="link small" (click)="editCoupons()">Coupons</button>
+        </div>
+        <div class="card pad totals">
+          <div class="row between small"><span class="muted">Merchandise subtotal</span><span>{{ peso(cart.subtotal()) }}</span></div>
+          <div class="row between small"><span class="muted">Shipping fee</span><span>{{ peso(checkout.shipping()) }}</span></div>
+          @if (checkout.giftFee() > 0) {
+            <div class="row between small"><span class="muted">Gift wrap</span><span>{{ peso(checkout.giftFee()) }}</span></div>
+          }
+          @if (cart.discount() > 0) {
+            <div class="row between small discount"><span>Voucher ({{ cart.activeCoupon()?.code }})</span><span>−{{ peso(cart.discount()) }}</span></div>
+          }
+          <div class="divider"></div>
+          <div class="row between"><b>Total payment</b><span class="price-tag total">{{ peso(checkout.total()) }}</span></div>
+        </div>
+      </section>
+    </div>
+  }
+</ion-content>
+
+@if (cart.lines().length) {
+  <footer class="bottom-bar">
+    <div class="place-row">
+      <div class="place-total"><span class="small muted">Total</span><span class="price-tag total">{{ peso(checkout.total()) }}</span></div>
+      <button type="button" class="btn btn-accent" (click)="continueToPayment()">Continue to payment</button>
+    </div>
+  </footer>
+}

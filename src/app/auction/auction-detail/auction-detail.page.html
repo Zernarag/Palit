@@ -1,0 +1,131 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <!-- ============ TOP BAR ============ -->
+  <div class="topbar bordered">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title" style="font-size: 14px;">Auction Item</div>
+    <button class="iconbtn" (click)="toggleWatch()" aria-label="Add to watchlist">
+      <svg class="icon"
+           [style.stroke]="isWatched ? 'var(--guava)' : 'var(--ink-faint)'"
+           [style.fill]="isWatched ? 'var(--guava)' : 'none'">
+        <use href="#icon-heart"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ============ HERO IMAGE ============ -->
+  <div class="hero">
+    <img [src]="auction.img" [alt]="auction.name" class="hero-image">
+  </div>
+
+  <div class="section" style="padding-top: 16px;">
+
+    <!-- ============ STORE + RESERVE ============ -->
+    <div class="row between">
+      <span class="eyebrow">{{ auction.store }}</span>
+      <span class="reserve-badge" [ngClass]="reserveClass" *ngIf="hasReserve">
+        {{ reserveLabel }}
+      </span>
+    </div>
+
+    <h1 class="display" style="font-size: 19px; margin-top: 6px;">
+      {{ auction.name }}
+    </h1>
+    <div class="small faint" style="margin-top: 4px;">
+      Condition: {{ auction.condition }}
+    </div>
+
+    <!-- ============ CURRENT BID + COUNTDOWN ============ -->
+    <div class="card pad hero-stats">
+      <div class="row between">
+        <div>
+          <div class="small hero-stats-label">Current Bid</div>
+          <div class="display hero-stats-value">
+            {{ formatPrice(auction.currentBid) }}
+          </div>
+          <div class="small hero-stats-sub">
+            {{ auction.bidCount }} bid{{ auction.bidCount === 1 ? '' : 's' }}
+          </div>
+        </div>
+
+        <div style="text-align: right;">
+          <div class="small hero-stats-label">Time Left</div>
+          <div class="auction-hero-countdown">{{ countdown }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BID INPUT ============ -->
+    <div class="field" style="margin-top: 20px;">
+      <label>Your bid (minimum {{ formatPrice(minBid) }})</label>
+      <div class="stepper-amt">
+        <button (click)="stepBid(-50)">−</button>
+        <input type="number"
+               [(ngModel)]="bidDraft"
+               [min]="minBid"
+               inputmode="numeric">
+        <button (click)="stepBid(50)">+</button>
+      </div>
+    </div>
+
+    <button class="btn btn-accent" [disabled]="isEnded" (click)="placeBid()">
+      {{ isEnded ? 'Auction Ended' : 'Place Bid' }}
+    </button>
+
+    <button class="btn btn-outline"
+            style="margin-top: 10px;"
+            *ngIf="auction.buyNow"
+            [disabled]="isEnded"
+            (click)="buyNow()">
+      Buy It Now — {{ formatPrice(auction.buyNow) }}
+    </button>
+
+    <!-- ============ BID HISTORY ============ -->
+    <h2 class="section-title" style="font-size: 15px; margin: 20px 0 12px;">
+      Bid History
+    </h2>
+    <div class="card pad">
+      <ng-container *ngIf="auction.bids.length; else noBids">
+        <div class="bid-history-row"
+             *ngFor="let b of auction.bids">
+          <span [class.bidder-you]="b.isYou">{{ b.bidder }}</span>
+          <span class="mono">{{ formatPrice(b.amount) }}</span>
+        </div>
+      </ng-container>
+      <ng-template #noBids>
+        <div class="small faint center">Be the first to bid on this item!</div>
+      </ng-template>
+    </div>
+
+    <!-- ============ DESCRIPTION ============ -->
+    <h2 class="section-title" style="font-size: 15px; margin: 20px 0 12px;">
+      Description
+    </h2>
+    <div class="small muted" style="line-height: 1.6;">
+      {{ auction.desc }}
+    </div>
+
+    <!-- ============ PICKUP & SHIPPING ============ -->
+    <h2 class="section-title" style="font-size: 15px; margin: 20px 0 12px;">
+      Pickup & Shipping
+    </h2>
+    <div class="card pad">
+      <div class="row between small" style="margin-bottom: 8px;">
+        <span class="muted">Ships from</span>
+        <span>{{ auction.store.split('—')[1]?.trim() || auction.store }}</span>
+      </div>
+      <div class="row between small" style="margin-bottom: 8px;">
+        <span class="muted">Est. shipping</span>
+        <span>{{ formatPrice(120) }}</span>
+      </div>
+      <div class="row between small">
+        <span class="muted">Or</span>
+        <span class="link" (click)="schedulePickup()">Schedule local pickup</span>
+      </div>
+    </div>
+
+    <div style="height: 40px;"></div>
+  </div>
+</ion-content>

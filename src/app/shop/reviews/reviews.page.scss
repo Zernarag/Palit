@@ -1,0 +1,44 @@
+.page-content { --background: var(--canvas); }
+
+.bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bar-bg {
+  flex: 1;
+  height: 6px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: var(--star);
+  border-radius: 4px;
+}
+
+.review-row .avatar {
+  background: var(--palm-light);
+  color: var(--palm-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qa-icon {
+  width: 18px;
+  height: 18px;
+  stroke: var(--palm-dark);
+  fill: none;
+  margin-top: 2px;
+  flex: 0 0 auto;
+}
+.qa-row {
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.qa-row:last-child { border-bottom: none; }

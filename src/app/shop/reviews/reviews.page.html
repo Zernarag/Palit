@@ -1,0 +1,74 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar bordered">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title">Reviews & Ratings</div>
+  </div>
+
+  <div class="section" style="padding-top: 16px;">
+
+    <div class="card pad row" style="gap: 20px; align-items: center;">
+      <div class="center">
+        <div class="display" style="font-size: 34px;">{{ product.rating }}</div>
+        <div class="stars">★★★★★</div>
+        <div class="small faint">{{ product.reviews }} ratings</div>
+      </div>
+
+      <div class="bars">
+        <div class="row" style="gap: 8px;" *ngFor="let n of [5,4,3,2,1]">
+          <span class="small faint" style="width: 14px;">{{ n }}</span>
+          <div class="bar-bg">
+            <div class="bar-fill" [style.width.%]="n === 5 ? 80 : n === 4 ? 12 : n === 3 ? 5 : n === 2 ? 2 : 1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hscroll" style="margin-top: 16px;">
+      <div class="chip active">All ({{ product.reviews }})</div>
+      <div class="chip">With Photos (410)</div>
+      <div class="chip">5★ (1872)</div>
+      <div class="chip">Questions (56)</div>
+    </div>
+
+    <div style="margin-top: 12px;">
+      <div class="list-row review-row"
+           *ngFor="let r of reviews"
+           style="align-items: flex-start;">
+        <div class="avatar">
+          <svg class="icon"><use href="#icon-user"/></svg>
+        </div>
+        <div style="flex: 1;">
+          <div class="row between">
+            <b class="small">{{ r.name }}</b>
+            <span class="small faint">{{ r.date }}</span>
+          </div>
+          <div class="stars" style="margin: 4px 0;">{{ starStr(r.rating) }}</div>
+          <div class="small muted" style="line-height: 1.5;">{{ r.text }}</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-outline" style="margin-top: 12px;">Load More Reviews</button>
+
+    <div class="divider"></div>
+
+    <div class="row between">
+      <h2 class="section-title" style="font-size: 15px;">Questions & Answers</h2>
+      <span class="link small">Ask a question</span>
+    </div>
+
+    <div style="margin-top: 12px;">
+      <div class="list-row qa-row" *ngFor="let q of qa" style="align-items: flex-start;">
+        <svg class="icon qa-icon"><use href="#icon-question"/></svg>
+        <div style="flex: 1;">
+          <div class="small" style="font-weight: 700;">{{ q.q }}</div>
+          <div class="small muted" style="margin-top: 4px;"><b>Seller:</b> {{ q.a }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

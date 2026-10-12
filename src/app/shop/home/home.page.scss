@@ -1,0 +1,185 @@
+/* ===================== HOME PAGE ===================== */
+.page-content {
+  --background: var(--canvas);
+}
+
+/* ---------- Top bar ---------- */
+.home-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 12px;
+  background: linear-gradient(135deg, var(--palm) 0%, var(--palm-dark) 70%, var(--palm-deep) 100%);
+  box-shadow: 0 2px 12px rgba(190, 58, 12, 0.22);
+}
+
+.home-logo {
+  width: 72px;
+  height: 36px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.15));
+}
+
+/* ---------- Chips row ---------- */
+.chips-row {
+  padding: 10px 16px 0;
+}
+
+.chips-row .chip:not(.active) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border-color: var(--line);
+  transition: all var(--tx-fast);
+}
+.chips-row .chip:active { transform: scale(0.94); }
+
+.chips-row .chip svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Hero banner ---------- */
+.hero-banner {
+  background:
+    radial-gradient(ellipse at 105% -5%, rgba(255, 180, 100, 0.22), transparent 55%),
+    radial-gradient(ellipse at -10% 110%, rgba(0,0,0,0.12), transparent 55%),
+    linear-gradient(135deg, var(--palm) 0%, var(--palm-dark) 55%, var(--palm-deep) 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  box-shadow: 0 14px 32px rgba(190, 58, 12, 0.32), 0 2px 6px rgba(190, 58, 12, 0.22);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  color: #FFD9A8;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 6px;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.hero-btn {
+  width: auto;
+  padding: 0 20px;
+  margin-top: 16px;
+  background: #fff;
+  color: var(--palm-dark);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  font-weight: 700;
+  border-radius: 10px;
+}
+.hero-btn:active { transform: scale(0.95); }
+
+.hero-bag {
+  position: absolute;
+  right: -12px;
+  bottom: -14px;
+  width: 140px;
+  height: 140px;
+  stroke: rgba(255,255,255,0.22);
+  fill: none;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* ---------- Section headers ---------- */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0;
+}
+
+.icon-flash {
+  width: 18px;
+  height: 18px;
+  stroke: var(--mango-dark);
+  fill: var(--mango-light);
+}
+
+.countdown-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  margin-left: 6px;
+  color: var(--mango-dark);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Category rail ---------- */
+.cat-item {
+  flex: 0 0 74px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--tx-fast);
+}
+.cat-item:active { transform: scale(0.93); }
+
+.cat-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 20px;
+  background: var(--palm-xlight);
+  border: 1.5px solid var(--palm-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(240, 78, 26, 0.10);
+  transition: background var(--tx-fast), box-shadow var(--tx-fast);
+}
+.cat-item:hover .cat-icon { background: var(--palm-light); box-shadow: 0 6px 14px rgba(240, 78, 26, 0.16); }
+
+.cat-svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--palm-dark);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cat-name {
+  margin-top: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/* ---------- Horizontal product cards ---------- */
+.hcard-wrap {
+  flex: 0 0 156px;
+}
+
+/* ---------- Wishlist heart size ---------- */
+.heart-svg {
+  width: 16px;
+  height: 16px;
+}

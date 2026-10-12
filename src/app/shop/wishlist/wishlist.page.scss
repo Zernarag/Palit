@@ -1,0 +1,18 @@
+.page-content { --background: var(--canvas); }
+
+.heart-svg {
+  width: 16px;
+  height: 16px;
+}
+
+.empty-svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--guava);
+  fill: none;
+}
+.empty-cta {
+  width: auto;
+  padding: 0 20px;
+  margin-top: 8px;
+}

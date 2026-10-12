@@ -1,0 +1,26 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">Shipping address</div>
+</header>
+
+<ion-content>
+  <div class="section">
+    <div class="step-label"><app-icon name="pin" /> Delivery address</div>
+    @for (address of addresses; track address.id) {
+      <button type="button" class="card pad address-choice" [class.selected]="checkout.selectedAddress() === address.id"
+              [attr.aria-pressed]="checkout.selectedAddress() === address.id" (click)="checkout.selectedAddress.set(address.id)">
+        <span class="address-copy">
+          <span class="row address-label"><b>{{ address.label }}</b>@if (address.id === 1) { <span class="badge badge-new">Default</span> }</span>
+          <span class="small">{{ address.name }} · {{ address.phone }}</span>
+          <span class="small faint">{{ address.line }}</span>
+        </span>
+        <span class="radio" [class.on]="checkout.selectedAddress() === address.id"></span>
+      </button>
+    }
+    <button type="button" class="btn btn-outline add-address" disabled><app-icon name="plus-circle" /> Add new address</button>
+  </div>
+</ion-content>
+
+<footer class="bottom-bar">
+  <button type="button" class="btn btn-accent" (click)="continue()">Continue to delivery</button>
+</footer>

@@ -1,0 +1,43 @@
+/* ===================== SPLASH SCREEN ===================== */
+ion-content.splash-content { --background: var(--palm-dark); }
+
+.splash-content {
+  --background: linear-gradient(160deg, var(--palm) 0%, var(--palm-dark) 55%, var(--palm-deep) 100%);
+}
+
+.splash-wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: linear-gradient(160deg, var(--palm) 0%, var(--palm-dark) 55%, var(--palm-deep) 100%);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.18);
+}
+
+.tagline {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.spinner {
+  margin-top: 36px;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.28);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

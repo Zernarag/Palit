@@ -1,0 +1,12 @@
+:host { display: flex; flex-direction: column; }
+.step-label { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s3); color: var(--ink-soft); font-size: 13px; font-weight: 700; }
+.step-label app-icon { color: var(--palm); font-size: 18px; }
+.delivery-choice, .gift-choice { display: flex; width: 100%; align-items: center; gap: var(--s3); margin-bottom: var(--s3); border: 1.5px solid var(--line); text-align: left; }
+.delivery-choice { cursor: pointer; }
+.delivery-choice.selected { border-color: var(--palm); box-shadow: var(--shadow-sm); }
+.delivery-copy, .gift-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 4px; }
+.price-pill { padding: 4px 10px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--canvas); color: var(--ink-soft); font-size: 12px; font-weight: 700; }
+.radio { width: 20px; height: 20px; flex: 0 0 auto; border: 2px solid var(--line); border-radius: 50%; }
+.radio.on { border: 6px solid var(--palm); }
+.gift-choice { cursor: pointer; }
+.gift-choice input { width: 18px; height: 18px; accent-color: var(--palm); }

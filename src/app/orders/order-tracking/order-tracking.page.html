@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar bordered">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title">Track Order</div>
+    <button class="iconbtn" (click)="chatCourier()" aria-label="Chat with courier">
+      <svg class="icon"><use href="#icon-chat"/></svg>
+    </button>
+  </div>
+
+  <div class="section" style="padding-top: 16px;">
+
+    <!-- ============ STATUS BANNER ============ -->
+    <div class="card pad status-banner">
+      <div class="small status-banner-order">
+        Order <b>{{ order?.id }}</b>
+      </div>
+      <div class="display status-banner-title">
+        {{ order?.status === 'Delivered' ? 'Delivered' : 'Out for Delivery' }}
+      </div>
+      <div class="small status-banner-sub">
+        {{ order?.status === 'Delivered'
+            ? 'Delivered on Aug 9, 1:45 PM'
+            : 'Arriving today, 2:00–5:00 PM' }}
+      </div>
+    </div>
+
+    <!-- ============ COURIER CARD ============ -->
+    <div class="card pad courier-card" *ngIf="order?.status !== 'Delivered'">
+      <div class="row" style="gap: 10px;">
+        <div class="avatar">
+          <svg class="icon"><use href="#icon-bike"/></svg>
+        </div>
+        <div style="flex: 1;">
+          <div class="small" style="font-weight: 700;">Mark R. — J&amp;T Express</div>
+          <div class="small faint">Plate: NGD 4521 · ★ 4.9</div>
+        </div>
+        <button class="iconbtn" (click)="callRider()" aria-label="Call rider">
+          <svg class="icon"><use href="#icon-phone-call"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ TIMELINE ============ -->
+    <h2 class="section-title" style="font-size: 15px; margin: 20px 0 12px;">
+      Delivery Timeline
+    </h2>
+
+    <div class="timeline">
+      <div class="tl-item" [ngClass]="step.state" *ngFor="let step of timeline">
+        <b class="small">{{ step.label }}</b>
+        <div class="small faint" *ngIf="step.date">{{ step.date }}</div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

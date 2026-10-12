@@ -1,0 +1,86 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar" style="gap: 10px;">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="searchbar" (click)="goTo('/search')">
+      <svg class="icon"><use href="#icon-search"/></svg>
+      <span>{{ query }}</span>
+    </div>
+    <button class="iconbtn" (click)="goTo('/cart')" aria-label="Cart">
+      <svg class="icon"><use href="#icon-cart"/></svg>
+    </button>
+  </div>
+
+  <div class="row between controls-row">
+    <span class="small muted">{{ results.length }} results</span>
+    <div class="row" style="gap: 8px;">
+      <div class="chip" (click)="cycleSort()">Sort: {{ currentSort.label }}</div>
+      <div class="chip" (click)="toggleFilters()">
+        <svg class="icon icon-sm"><use href="#icon-filter"/></svg>
+        Filter
+        <span *ngIf="activeFilterCount">({{ activeFilterCount }})</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card pad filter-panel" *ngIf="showFilters">
+    <div class="small" style="font-weight: 700; margin-bottom: 8px;">Price Range</div>
+    <div class="row" style="gap: 8px; margin-bottom: 16px;">
+      <input class="input" type="number" placeholder="Min ₱" [(ngModel)]="minPriceInput">
+      <input class="input" type="number" placeholder="Max ₱" [(ngModel)]="maxPriceInput">
+    </div>
+
+    <div class="small" style="font-weight: 700; margin-bottom: 8px;">Rating</div>
+    <div class="hscroll">
+      <div class="chip" [class.active]="filterMinRating === 4.5" (click)="setRating(4.5)">4.5+</div>
+      <div class="chip" [class.active]="filterMinRating === 4.0" (click)="setRating(4.0)">4.0+</div>
+      <div class="chip" [class.active]="filterMinRating === 3.5" (click)="setRating(3.5)">3.5+</div>
+    </div>
+
+    <div class="row" style="gap: 8px; margin-top: 16px;">
+      <button class="btn btn-outline btn-sm" style="flex: 1;" (click)="clearFilters()">Clear</button>
+      <button class="btn btn-primary btn-sm" style="flex: 1;" (click)="applyFilters()">Apply Filters</button>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top: 12px;">
+    <div class="grid2" *ngIf="results.length; else emptyTpl">
+      <div class="pcard" *ngFor="let p of results" (click)="openProduct(p.id)">
+        <div class="pimg-wrap">
+          <img [src]="p.img" [alt]="p.name" loading="lazy">
+          <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+          <button class="heart" (click)="onHeart(p.id, $event)">
+            <svg class="icon"
+                 style="width: 16px; height: 16px;"
+                 [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'"
+                 [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'">
+              <use href="#icon-heart"/>
+            </svg>
+          </button>
+        </div>
+        <div class="pbody">
+          <div class="pname">
+            <span class="mall-tag" *ngIf="p.mall">Mall</span>{{ p.name }}
+          </div>
+          <div class="row" style="gap: 4px;">
+            <span class="stars">{{ starStr(p.rating) }}</span>
+            <span class="small faint">{{ p.rating }}</span>
+          </div>
+          <div class="prow">
+            <span class="price-tag">{{ formatPrice(p.price) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyTpl>
+      <div class="empty-state">
+        <svg class="empty-svg"><use href="#icon-search"/></svg>
+        <b>No results found</b>
+        <div class="small muted">Try a different search term or clear your filters.</div>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>

@@ -1,0 +1,29 @@
+.page-content { --background: var(--canvas); }
+
+.bolt-icon {
+  width: 18px;
+  height: 18px;
+  stroke: var(--mango-dark);
+  fill: var(--mango-light);
+}
+
+.countdown-banner {
+  background: var(--guava);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.countdown-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.countdown-icon {
+  width: 34px;
+  height: 34px;
+  stroke: #fff;
+  fill: none;
+  opacity: 0.9;
+}

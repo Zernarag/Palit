@@ -1,0 +1,29 @@
+.page-content { --background: var(--canvas); }
+
+.mall-banner {
+  background: linear-gradient(120deg, #141414, #2c2c2c);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mall-icon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--mango);
+  fill: none;
+}
+
+.category-scroll {
+  padding: 10px 16px 6px;
+  border-bottom: 1px solid var(--line);
+}
+.mall-category {
+  gap: 7px;
+  min-height: 38px;
+}
+
+.panel {
+  padding: 16px;
+}

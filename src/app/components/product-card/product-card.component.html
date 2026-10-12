@@ -1,0 +1,30 @@
+<div class="pcard" role="button" tabindex="0" (click)="open()" (keydown.enter)="open()">
+  <div class="pimg-wrap">
+    <img [src]="product.img" [alt]="product.name" loading="lazy" />
+    @if (product.badge) {
+      <span class="badge pbadge" [class]="product.badge.cls">{{ product.badge.txt }}</span>
+    }
+    <button type="button" class="heart" (click)="toggleHeart($event)"
+            [attr.aria-label]="wishlist.has(product.id) ? 'Remove from wishlist' : 'Add to wishlist'">
+      <app-icon name="heart" [filled]="wishlist.has(product.id)"
+                [class.on]="wishlist.has(product.id)" />
+    </button>
+  </div>
+  <div class="pbody">
+    <div class="pname">
+      @if (product.mall) { <span class="mall-tag">Mall</span> }{{ product.name }}
+    </div>
+    <div class="row rating">
+      <app-stars [rating]="product.rating" />
+      <span class="small faint">{{ product.rating }}</span>
+    </div>
+    <div class="prow">
+      <span class="price-tag">{{ peso(product.price) }}</span>
+      @if (product.old) {
+        <span class="price-old">{{ peso(product.old) }}</span>
+        <span class="disc-chip">-{{ discountPct(product) }}%</span>
+      }
+    </div>
+    <div class="pmeta">{{ product.sold.toLocaleString() }} sold</div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">Payment method</div>
+</header>
+
+<ion-content>
+  <div class="section">
+    <div class="step-label"><app-icon name="card" /> Select how to pay</div>
+    @for (method of methods; track method.id) {
+      <button type="button" class="card pad payment-choice" [class.selected]="checkout.selectedPayment() === method.id"
+              [attr.aria-pressed]="checkout.selectedPayment() === method.id" (click)="checkout.selectedPayment.set(method.id)">
+        <app-icon class="payment-icon" [name]="method.icon" />
+        <span class="payment-name">{{ method.name }}</span>
+        <span class="radio" [class.on]="checkout.selectedPayment() === method.id"></span>
+      </button>
+    }
+
+    @if (checkout.selectedPayment() === 'card') {
+      <div class="card pad card-form">
+        <div class="field">
+          <label for="card-number">Card number</label>
+          <input id="card-number" class="input" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456"
+                 [ngModel]="checkout.cardNumber()" (ngModelChange)="checkout.onCardNumber($event)" />
+        </div>
+        <div class="row card-fields">
+          <div class="field">
+            <label for="card-expiry">Expiry</label>
+            <input id="card-expiry" class="input" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY"
+                   [ngModel]="checkout.cardExpiry()" (ngModelChange)="checkout.onCardExpiry($event)" />
+          </div>
+          <div class="field">
+            <label for="card-cvv">CVV</label>
+            <input id="card-cvv" class="input" inputmode="numeric" autocomplete="cc-csc" placeholder="123"
+                   [ngModel]="checkout.cardCvv()" (ngModelChange)="checkout.onCardCvv($event)" />
+          </div>
+        </div>
+        @if (attemptedContinue && !checkout.cardValid()) {
+          <p class="small error">Enter valid card details to continue.</p>
+        }
+      </div>
+    }
+  </div>
+</ion-content>
+
+<footer class="bottom-bar">
+  <button type="button" class="btn btn-accent" (click)="continue()">Review order</button>
+</footer>

@@ -1,0 +1,63 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">My Cart @if (cart.count() > 0) { <span class="faint count">({{ cart.count() }})</span> }</div>
+  @if (cart.lines().length) { <span class="link" (click)="confirmClear()">Clear</span> }
+</header>
+
+<ion-content>
+  @if (cart.lines().length) {
+    <div class="section list">
+      @for (l of cart.lines(); track l.index) {
+        <div class="card pad item">
+          <img [src]="l.product.img" [alt]="l.product.name" (click)="openProduct(l.product.id)" />
+          <div class="item-body">
+            <div class="item-name" (click)="openProduct(l.product.id)">
+              @if (l.product.mall) { <span class="mall-tag">Mall</span> }{{ l.product.name }}
+            </div>
+            @if (l.item.variant) { <div class="small faint variant">{{ l.item.variant }}</div> }
+            <div class="row between item-foot">
+              <div>
+                <span class="price-tag">{{ peso(l.product.price) }}</span>
+                @if (l.product.old) { <span class="price-old">{{ peso(l.product.old) }}</span> }
+              </div>
+              <div class="qty">
+                <button type="button" (click)="cart.changeQty(l.index, -1)" [disabled]="l.item.qty <= 1" aria-label="Decrease quantity">−</button>
+                <span>{{ l.item.qty }}</span>
+                <button type="button" (click)="cart.changeQty(l.index, 1)" [disabled]="l.item.qty >= l.product.stock" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="remove" (click)="cart.remove(l.index)" aria-label="Remove item">
+            <app-icon name="close" />
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-state empty">
+      <div class="empty-emoji"><app-icon name="cart" /></div>
+      <b>Your cart is empty</b>
+      <div class="small muted">Add items to get started with checkout.</div>
+      <button type="button" class="btn btn-primary" style="width: auto; padding: 0 24px;" (click)="startShopping()">Start Shopping</button>
+    </div>
+  }
+</ion-content>
+
+<div class="bottom-bar">
+  @if (cart.lines().length) {
+    <div class="row between small muted sum">
+      <span>Subtotal ({{ cart.count() }} item{{ cart.count() === 1 ? '' : 's' }})</span>
+      <span>{{ peso(cart.subtotal()) }}</span>
+    </div>
+    <div class="row between sum">
+      <b>Total</b>
+      <span class="price-tag total">{{ peso(cart.subtotal()) }}</span>
+    </div>
+    <div class="small faint note">Shipping and vouchers are applied at checkout.</div>
+  } @else {
+    <div class="small muted empty-checkout-note">Add an item to continue to checkout.</div>
+  }
+  <button type="button" class="btn btn-accent" [disabled]="cart.lines().length === 0" (click)="checkout()">
+    Proceed to Checkout
+  </button>
+</div>

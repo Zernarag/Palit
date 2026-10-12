@@ -1,0 +1,66 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar bordered">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title">My Orders</div>
+  </div>
+
+  <!-- ============ FILTER CHIPS ============ -->
+  <div class="hscroll chips-row">
+    <div class="chip"
+         *ngFor="let f of filters"
+         [class.active]="filter === f.id"
+         (click)="setFilter(f.id)">
+      {{ f.label }}
+    </div>
+  </div>
+
+  <!-- ============ ORDER LIST ============ -->
+  <div class="section" style="padding-top: 12px;">
+
+    <ng-container *ngIf="orders.length; else emptyTpl">
+      <div class="card pad order-card"
+           *ngFor="let o of orders"
+           (click)="openOrder(o.id)">
+
+        <div class="row between small order-head">
+          <span class="faint">{{ o.date }}</span>
+          <span class="badge" [ngClass]="statusClass(o.status)">{{ o.status }}</span>
+        </div>
+
+        <div class="row thumbs-row">
+          <ng-container *ngFor="let line of o.items.slice(0, 3)">
+            <img *ngIf="findProduct(line.id) as p"
+                 [src]="p.img"
+                 [alt]="p.name"
+                 class="thumb">
+          </ng-container>
+          <div class="small faint more-count" *ngIf="o.items.length > 3">
+            +{{ o.items.length - 3 }}
+          </div>
+        </div>
+
+        <div class="row between order-foot">
+          <span class="small faint">Order {{ o.id }}</span>
+          <span class="price-tag">{{ formatPrice(o.total) }}</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyTpl>
+      <div class="empty-state">
+        <div class="empty-tile">
+          <svg class="empty-icon"><use href="#icon-package"/></svg>
+        </div>
+        <b>No orders yet</b>
+        <div class="small muted">Your placed orders will show up here.</div>
+        <button class="btn btn-primary btn-sm empty-cta" (click)="goShopping()">
+          Start Shopping
+        </button>
+      </div>
+    </ng-template>
+
+  </div>
+</ion-content>

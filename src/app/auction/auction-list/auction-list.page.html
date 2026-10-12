@@ -1,0 +1,96 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <!-- ============ TOP BAR (dark) ============ -->
+  <div class="topbar auction-topbar">
+    <img class="topbar-logo" src="assets/icon/logo-mark.png" alt="Palit">
+
+    <div class="searchbar auction-searchbar" (click)="goTo('/search')">
+      <svg class="icon"><use href="#icon-search"/></svg>
+      <span>Search auctions...</span>
+    </div>
+
+    <button class="iconbtn" (click)="goTo('/notifications')" aria-label="Notifications">
+      <svg class="icon"><use href="#icon-bell"/></svg>
+    </button>
+  </div>
+
+  <div class="screen-scroll">
+
+    <!-- ============ INTRO CARD ============ -->
+    <div class="section" style="padding-top: 12px; padding-bottom: 0;">
+      <div class="card pad auction-intro">
+        <div class="eyebrow auction-intro-eyebrow">Palit Auctions</div>
+        <div class="display auction-intro-title">
+          Bid on donated & liquidated goods
+        </div>
+        <div class="small auction-intro-sub">
+          Every win supports local community programs
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FILTER CHIPS ============ -->
+    <div class="hscroll chips-row">
+      <div class="chip"
+           *ngFor="let c of categories"
+           [class.active]="filterId === c.id"
+           (click)="setFilter(c.id)">
+        <svg class="icon icon-sm" *ngIf="c.icon" aria-hidden="true">
+          <use [attr.href]="'#' + c.icon"/>
+        </svg>
+        <span>{{ c.name }}</span>
+      </div>
+    </div>
+
+    <!-- ============ AUCTION GRID ============ -->
+    <div class="section" style="padding-top: 12px;">
+      <div class="grid2" *ngIf="auctions.length; else emptyTpl">
+        <div class="acard"
+             *ngFor="let a of auctions"
+             (click)="openAuction(a.id)">
+
+          <div class="aimg-wrap">
+            <img [src]="a.img" [alt]="a.name" loading="lazy">
+
+            <span class="countdown-chip" [class.ending]="isEnding(a)">
+              {{ formatCountdown(a.endTime - now) }}
+            </span>
+
+            <button class="watch-btn"
+                    (click)="onWatch(a.id, $event)"
+                    [attr.aria-label]="isWatched(a.id) ? 'Remove from watchlist' : 'Add to watchlist'">
+              <svg class="icon heart-svg"
+                   [style.stroke]="isWatched(a.id) ? 'var(--guava)' : 'var(--ink-faint)'"
+                   [style.fill]="isWatched(a.id) ? 'var(--guava)' : 'none'">
+                <use href="#icon-heart"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="abody">
+            <div class="aname">{{ a.name }}</div>
+            <div class="current-bid-label">Current Bid</div>
+            <div class="prow">
+              <span class="price-tag">{{ formatPrice(a.currentBid) }}</span>
+            </div>
+            <div class="bid-count">
+              {{ a.bidCount }} bid{{ a.bidCount === 1 ? '' : 's' }} · {{ a.condition }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #emptyTpl>
+        <div class="empty-state">
+          <div class="empty-tile">
+            <svg class="empty-icon"><use href="#icon-archive"/></svg>
+          </div>
+          <b>No auctions in this category</b>
+          <div class="small muted">Check back soon for new donated items.</div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div style="height: 40px;"></div>
+  </div>
+</ion-content>

@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true" class="page-content">
+
+  <div class="topbar bordered">
+    <button class="iconbtn" (click)="back()" aria-label="Go back">
+      <svg class="icon"><use href="#icon-back"/></svg>
+    </button>
+    <div class="row topbar-title" style="gap: 8px;">
+      <svg class="icon bolt-icon"><use href="#icon-bolt"/></svg>
+      Flash Sale
+    </div>
+    <button class="iconbtn" (click)="goTo('/cart')" aria-label="Cart">
+      <svg class="icon"><use href="#icon-cart"/></svg>
+    </button>
+  </div>
+
+  <div class="section" style="padding-top: 12px;">
+    <div class="card pad countdown-banner">
+      <div>
+        <div style="font-size: 13px; font-weight: 700;">Deals end in</div>
+        <div class="countdown-value">02 : 14 : 37</div>
+      </div>
+      <svg class="countdown-icon"><use href="#icon-clock"/></svg>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top: 12px;">
+    <div class="grid2">
+      <div class="pcard" *ngFor="let p of products" (click)="openProduct(p.id)">
+        <div class="pimg-wrap">
+          <img [src]="p.img" [alt]="p.name" loading="lazy">
+          <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+          <button class="heart" (click)="onHeart(p.id, $event)">
+            <svg class="icon"
+                 style="width: 16px; height: 16px;"
+                 [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'"
+                 [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'">
+              <use href="#icon-heart"/>
+            </svg>
+          </button>
+        </div>
+        <div class="pbody">
+          <div class="pname">{{ p.name }}</div>
+          <div class="row" style="gap: 4px;">
+            <span class="stars">{{ starStr(p.rating) }}</span>
+            <span class="small faint">{{ p.rating }}</span>
+          </div>
+          <div class="prow">
+            <span class="price-tag">{{ formatPrice(p.price) }}</span>
+            <span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span>
+          </div>
+          <div class="pmeta">{{ p.sold }} sold</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,92 @@
+<header class="topbar bordered">
+  <button class="iconbtn" type="button" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <h1 class="topbar-title">{{ title }}</h1>
+  @if (screen === 'notifications') {
+    <button class="link small mark-read" type="button" (click)="markAllRead()">Mark all read</button>
+  }
+</header>
+
+<ion-content>
+  <div class="section tool-page">
+    @switch (screen) {
+      @case ('settings') {
+        <h2 class="small group-title">ACCOUNT</h2>
+        <div class="tool-list">
+          <button type="button" class="tool-row" (click)="navigate('/edit-profile')"><span>Edit profile</span><b>›</b></button>
+          <button type="button" class="tool-row" (click)="navigate('/forgot-password')"><span>Password &amp; security</span><b>›</b></button>
+          <button type="button" class="tool-row" (click)="navigate('/help-center')"><span>Privacy</span><b>›</b></button>
+        </div>
+        <h2 class="small group-title">PREFERENCES</h2>
+        <div class="tool-list">
+          <label class="tool-row"><span>Push notifications</span><input type="checkbox" [(ngModel)]="pushNotifications"></label>
+          <label class="tool-row"><span>Dark mode</span><input type="checkbox" [(ngModel)]="darkMode"></label>
+          <label class="tool-row"><span>Language</span><select [(ngModel)]="language"><option>English</option><option>Filipino</option></select></label>
+          <div class="tool-row"><span>Currency</span><span class="small faint">PHP (₱)</span></div>
+        </div>
+        <h2 class="small group-title">SUPPORT</h2>
+        <div class="tool-list">
+          <button type="button" class="tool-row" (click)="navigate('/help-center')"><span>Help Center</span><b>›</b></button>
+          <div class="tool-row"><span>App version</span><span class="small faint">1.0.0</span></div>
+        </div>
+      }
+      @case ('edit-profile') {
+        <form class="profile-edit-form" (ngSubmit)="saveProfile()">
+          <label class="field">
+            <span>Full name</span>
+            <input class="input" name="name" [(ngModel)]="profileDraft.name" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>Email address</span>
+            <input class="input" type="email" name="email" [(ngModel)]="profileDraft.email" autocomplete="email" required />
+          </label>
+          @if (feedback) { <p class="small feedback" role="alert">{{ feedback }}</p> }
+          <button class="btn btn-primary" type="submit">Save changes</button>
+        </form>
+      }
+      @case ('rewards') {
+        <div class="card points-card">
+          <span class="small">{{ user.tier }} Member</span>
+          <strong>{{ points.toLocaleString() }} pts</strong>
+          <span class="small">{{ (3000 - points) > 0 ? 3000 - points : 0 }} pts to Platinum tier</span>
+          <div class="points-track"><span [style.width.%]="pointsPercent"></span></div>
+        </div>
+        <h2 class="section-title reward-heading">Redeem points</h2>
+        <div class="reward-list">
+          @for (reward of rewards; track reward.name) {
+            <div class="card pad reward-row">
+              <div><b>{{ reward.name }}</b><span class="small faint">{{ reward.cost }} points</span></div>
+              <button class="btn btn-ghost btn-sm" type="button" [disabled]="points < reward.cost" (click)="redeem(reward.cost, reward.name)">Redeem</button>
+            </div>
+          }
+        </div>
+        @if (feedback) { <p class="small feedback" role="status">{{ feedback }}</p> }
+      }
+      @case ('notifications') {
+        <div class="hscroll filter-row" aria-label="Notification filters">
+          <button class="chip" [class.active]="notificationFilter === 'all'" (click)="notificationFilter = 'all'">All</button>
+          <button class="chip" [class.active]="notificationFilter === 'orders'" (click)="notificationFilter = 'orders'">Orders</button>
+          <button class="chip" [class.active]="notificationFilter === 'promos'" (click)="notificationFilter = 'promos'">Promos</button>
+          <button class="chip" [class.active]="notificationFilter === 'chat'" (click)="notificationFilter = 'chat'">Chat</button>
+        </div>
+        <div class="notification-list">
+          @for (notification of visibleNotifications; track notification.title) {
+            <article class="notification-row" [class.unread]="notification.unread">
+              <svg class="notification-icon" aria-hidden="true"><use [attr.href]="'#' + notification.icon" /></svg>
+              <div><b>{{ notification.title }}</b><p>{{ notification.body }}</p><span class="small faint">{{ notification.time }}</span></div>
+            </article>
+          }
+        </div>
+      }
+      @case ('help-center') {
+        <button class="searchbar help-search" type="button"><app-icon name="search" /><span>Search for help</span></button>
+        <div class="help-actions">
+          <a routerLink="/order-history"><app-icon name="truck" /><span>Track my order</span></a>
+          <a routerLink="/payment-method"><app-icon name="card" /><span>Payments</span></a>
+          <button type="button" (click)="openSupportChat()"><app-icon name="chat" /><span>Chat with us</span></button>
+        </div>
+        <h2 class="section-title faq-heading">Frequently asked questions</h2>
+        <details class="faq" *ngFor="let faq of faqs"><summary>{{ faq.q }}</summary><p>{{ faq.a }}</p></details>
+      }
+    }
+  </div>
+</ion-content>

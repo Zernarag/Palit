@@ -1,0 +1,30 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">Delivery options</div>
+</header>
+
+<ion-content>
+  <div class="section">
+    <div class="step-label"><app-icon name="truck" /> Choose delivery speed</div>
+    @for (option of options; track option.id) {
+      <button type="button" class="card pad delivery-choice" [class.selected]="checkout.selectedDelivery() === option.id"
+              [attr.aria-pressed]="checkout.selectedDelivery() === option.id" (click)="checkout.selectedDelivery.set(option.id)">
+        <span class="delivery-copy">
+          <b class="small">{{ option.name }}</b>
+          <span class="small faint">{{ option.eta }}</span>
+        </span>
+        <span class="price-pill">{{ peso(option.price) }}</span>
+        <span class="radio" [class.on]="checkout.selectedDelivery() === option.id"></span>
+      </button>
+    }
+    <label class="card pad gift-choice">
+      <input type="checkbox" [checked]="checkout.giftWrap()" (change)="checkout.giftWrap.set(!checkout.giftWrap())" />
+      <span class="gift-copy"><b class="small">Add gift wrap</b><span class="small faint">Gift wrap and message</span></span>
+      <span class="price-pill">+{{ peso(giftWrapFee) }}</span>
+    </label>
+  </div>
+</ion-content>
+
+<footer class="bottom-bar">
+  <button type="button" class="btn btn-accent" (click)="continue()">Continue to payment</button>
+</footer>

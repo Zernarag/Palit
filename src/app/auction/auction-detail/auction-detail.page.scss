@@ -1,0 +1,109 @@
+.page-content { --background: var(--canvas); }
+
+/* ---------- Hero ---------- */
+.hero {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--mango-light);
+  overflow: hidden;
+}
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Reserve badge ---------- */
+.reserve-badge {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.03em;
+}
+.reserve-met     { background: var(--success-light); color: var(--success); }
+.reserve-not-met { background: var(--guava-light);   color: var(--guava); }
+
+/* ---------- Hero stats card ---------- */
+.hero-stats {
+  margin-top: 16px;
+  background: linear-gradient(120deg, var(--ink), #452D18);
+  color: #fff;
+}
+
+.hero-stats-label {
+  opacity: 0.8;
+  color: #fff;
+}
+
+.hero-stats-value {
+  font-size: 26px;
+  margin-top: 2px;
+  color: #fff;
+}
+
+.hero-stats-sub {
+  opacity: 0.85;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.auction-hero-countdown {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+/* ---------- Bid stepper ---------- */
+.stepper-amt {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.stepper-amt button {
+  width: 38px;
+  height: 44px;
+  border: none;
+  background: var(--mango-light);
+  color: var(--mango-dark);
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.stepper-amt input {
+  flex: 1;
+  height: 44px;
+  border: none;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  background: var(--card);
+  color: var(--ink);
+  width: 100%;
+}
+.stepper-amt input:focus { outline: none; }
+
+/* ---------- Bid history ---------- */
+.bid-history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+}
+.bid-history-row:last-child { border-bottom: none; }
+
+.bidder-you {
+  color: var(--palm);
+  font-weight: 800;
+}
+
+.mono { font-family: 'Space Mono', monospace; }

@@ -1,0 +1,61 @@
+.page-content { --background: var(--canvas); }
+
+/* ---------- Status banner ---------- */
+.status-banner {
+  background: var(--palm);
+  color: #fff;
+}
+.status-banner-order  { opacity: 0.85; }
+.status-banner-title  { font-size: 18px; margin-top: 4px; color: #fff; }
+.status-banner-sub    { opacity: 0.9; margin-top: 4px; }
+
+/* ---------- Courier ---------- */
+.courier-card {
+  margin-top: 12px;
+}
+.courier-card .avatar {
+  width: 44px;
+  height: 44px;
+  background: var(--palm-light);
+  color: var(--palm-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.courier-card .avatar .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--line);
+}
+.tl-item {
+  position: relative;
+  padding-bottom: 20px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--line);
+  border: 3px solid var(--canvas);
+}
+.tl-item.done::before  { background: var(--palm); }
+.tl-item.now::before   { background: var(--mango); box-shadow: 0 0 0 4px var(--mango-light); }
+.tl-item.pending b     { color: var(--ink-faint); }

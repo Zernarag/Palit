@@ -1,0 +1,8 @@
+:host { display: flex; flex-direction: column; }
+.order-success { display: flex; min-height: 78vh; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.success-mark { display: flex; width: 84px; height: 84px; align-items: center; justify-content: center; border-radius: 50%; background: var(--success-light); color: var(--success); font-size: 40px; }
+.order-success h1 { margin: var(--s4) 0 var(--s2); font-size: 26px; }
+.order-success p { max-width: 320px; margin: 0 0 var(--s5); line-height: 1.5; }
+.order-summary { display: flex; width: 100%; flex-direction: column; gap: var(--s3); text-align: left; }
+.mono { font-family: var(--font-mono); }
+.no-order { margin-top: 18vh; }

@@ -1,0 +1,8 @@
+.page-content { --background: var(--canvas); }
+.chips-row { padding: 8px 16px 0; }
+.empty-svg {
+  width: 44px;
+  height: 44px;
+  stroke: var(--ink-faint);
+  fill: none;
+}

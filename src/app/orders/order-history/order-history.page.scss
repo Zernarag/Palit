@@ -1,0 +1,59 @@
+.page-content { --background: var(--canvas); }
+
+.chips-row { padding: 12px 16px 0; }
+
+.order-card {
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.order-head {
+  margin-bottom: 8px;
+}
+
+.thumbs-row {
+  gap: 8px;
+  overflow: hidden;
+}
+
+.thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.more-count {
+  align-self: center;
+}
+
+.order-foot {
+  margin-top: 10px;
+}
+
+/* ---------- Empty ---------- */
+.empty-tile {
+  width: 88px;
+  height: 88px;
+  border-radius: 26px;
+  background: var(--palm-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.empty-icon {
+  width: 40px;
+  height: 40px;
+  stroke: var(--palm-dark);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.empty-cta {
+  width: auto;
+  padding: 0 22px;
+  margin-top: 8px;
+}

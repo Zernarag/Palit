@@ -1,0 +1,10 @@
+<ion-content [fullscreen]="true" class="page-content">
+  <header class="topbar bordered"><h1 class="topbar-title">Messages</h1><button class="iconbtn" type="button" aria-label="Help" routerLink="/help-center"><svg class="icon"><use href="#icon-question" /></svg></button></header>
+  <div class="section message-list">
+    <button class="message-row" *ngFor="let conversation of conversations" (click)="open(conversation.id)">
+      <span class="avatar"><svg class="icon"><use [attr.href]="'#' + conversation.avatar" /></svg></span>
+      <span class="conversation-copy"><span class="row between"><b>{{ conversation.name }}</b><time>{{ conversation.id === 'store' ? '2m ago' : conversation.id === 'courier' ? '15m ago' : '1d ago' }}</time></span><span class="preview">{{ previews[conversation.id] }}</span></span>
+      <span class="unread" *ngIf="unread[conversation.id]">{{ unread[conversation.id] }}</span>
+    </button>
+  </div>
+</ion-content>

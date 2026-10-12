@@ -1,0 +1,15 @@
+:host { display: flex; flex-direction: column; height: 100%; }
+.chat-topbar { gap: 10px; }
+.avatar { display: grid; flex: 0 0 36px; place-items: center; width: 36px; height: 36px; color: var(--palm-dark); background: var(--palm-light); border-radius: 50%; }
+.avatar .icon { width: 20px; height: 20px; }
+.chat-identity { display: grid; flex: 1; min-width: 0; gap: 3px; }
+.chat-identity b { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.chat-identity small { overflow: hidden; color: var(--ink-faint); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.chat-content { flex: 1; }
+.chat-log { display: flex; flex-direction: column; gap: 12px; padding: 18px 16px; }
+.bubble { max-width: min(80%, 300px); padding: 10px 13px; color: var(--ink); background: var(--card); border-radius: 16px 16px 16px 4px; box-shadow: var(--shadow-sm); font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
+.bubble.mine { align-self: flex-end; color: #fff; background: var(--palm); border-radius: 16px 16px 4px 16px; }
+.composer { display: flex; gap: 8px; align-items: center; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--card); border-top: 1px solid var(--line); }
+.composer .input { flex: 1; min-width: 0; }
+.send-button { display: grid; flex: 0 0 44px; place-items: center; width: 44px; height: 44px; color: #fff; background: var(--palm); border: 0; border-radius: 50%; }
+.send-button:disabled { opacity: .45; }

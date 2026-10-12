@@ -1,0 +1,44 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">Apply coupon</div>
+</header>
+
+<ion-content>
+  <div class="section">
+    <div class="card pad">
+      <div class="row coupon-entry">
+        <input class="input" [(ngModel)]="couponInput" placeholder="Enter promo code" aria-label="Promo code" />
+        <button type="button" class="btn btn-ghost btn-sm apply" (click)="apply()">Apply</button>
+      </div>
+      @if (checkout.couponError()) { <p class="small error">{{ checkout.couponError() }}</p> }
+      @if (cart.activeCoupon(); as active) {
+        <div class="active-coupon">
+          <div><b class="small">{{ active.code }}</b><div class="small muted">{{ active.desc }}</div></div>
+          <button type="button" class="link" (click)="removeCoupon()">Remove</button>
+        </div>
+      }
+    </div>
+
+    <h2 class="section-title available-title">Available coupons</h2>
+    @for (coupon of coupons; track coupon.code) {
+      <article class="card pad coupon-card" [class.unavailable]="!eligible(coupon.minSpend)">
+        <div class="coupon-copy">
+          <b>{{ coupon.code }}</b>
+          <span class="small muted">{{ coupon.desc }}</span>
+          @if (!eligible(coupon.minSpend)) {
+            <span class="small faint">Spend {{ peso(coupon.minSpend) }} to use</span>
+          }
+        </div>
+        @if (cart.activeCoupon()?.code === coupon.code) {
+          <button type="button" class="btn btn-outline btn-sm use" (click)="removeCoupon()">Applied</button>
+        } @else {
+          <button type="button" class="btn btn-ghost btn-sm use" [disabled]="!eligible(coupon.minSpend)" (click)="apply(coupon.code)">Use</button>
+        }
+      </article>
+    }
+  </div>
+</ion-content>
+
+<footer class="bottom-bar">
+  <button type="button" class="btn btn-accent" (click)="continue()">Continue</button>
+</footer>

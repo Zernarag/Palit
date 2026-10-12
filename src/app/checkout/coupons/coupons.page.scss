@@ -1,0 +1,10 @@
+:host { display: flex; flex-direction: column; }
+.coupon-entry { align-items: stretch; gap: var(--s2); }
+.apply, .use { width: auto; flex: 0 0 auto; padding-inline: var(--s4); }
+.error { margin-top: var(--s2); color: var(--guava); }
+.active-coupon, .coupon-card { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.active-coupon { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); }
+.available-title { margin: var(--s5) 0 var(--s3); font-size: 15px; }
+.coupon-card { margin-bottom: var(--s3); border: 1.5px dashed var(--palm-light); }
+.coupon-copy { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+.unavailable { opacity: .58; }

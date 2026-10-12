@@ -1,0 +1,23 @@
+<header class="topbar bordered">
+  <button type="button" class="iconbtn" (click)="back()" aria-label="Go back"><app-icon name="back" /></button>
+  <div class="topbar-title">Confirm payment</div>
+</header>
+
+<ion-content>
+  <div class="confirmation section">
+    <div class="secure-mark"><app-icon name="check" /></div>
+    <h1 class="display">Ready to place your order?</h1>
+    <p class="small muted">Confirm the payment method and total before completing this demo checkout.</p>
+
+    <div class="card pad payment-summary">
+      <div class="row between small"><span class="muted">Payment method</span><b>{{ checkout.payment().name }}</b></div>
+      <div class="row between small"><span class="muted">Deliver to</span><span>{{ checkout.address().label }}</span></div>
+      <div class="divider"></div>
+      <div class="row between"><b>Total</b><span class="price-tag total">{{ peso(checkout.total()) }}</span></div>
+    </div>
+  </div>
+</ion-content>
+
+<footer class="bottom-bar">
+  <button type="button" class="btn btn-accent" [disabled]="!checkout.canContinue()" (click)="confirm()">Confirm payment</button>
+</footer>

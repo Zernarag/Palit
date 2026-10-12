@@ -1,0 +1,15 @@
+:host { display: block; }
+.page { min-height: 100vh; background: var(--canvas); padding-bottom: 40px; }
+.topbar { display: flex; align-items: center; gap: var(--s3); padding: var(--s4) var(--s4) var(--s2); }
+.topbar-title { font-size: 18px; font-weight: 800; margin: 0; flex: 1; text-align: center; }
+.spacer { width: 36px; }
+
+.iconbtn {
+  width: 40px; height: 40px; border-radius: var(--r-full); border: none; background: var(--card);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-sm); color: var(--ink);
+}
+
+.body { padding: var(--s4) var(--s4) 0; }
+.terms { display: flex; align-items: flex-start; gap: 8px; margin-bottom: var(--s5); cursor: pointer; line-height: 1.4; color: var(--ink-soft); font-weight: 500; }
+.terms input { margin-top: 2px; }
+.mt-5 { margin-top: var(--s6); }
