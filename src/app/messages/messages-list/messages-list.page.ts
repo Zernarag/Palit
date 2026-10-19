@@ -15,7 +15,7 @@ import { CONVERSATIONS } from '../../data/content';
 export class MessagesListPage {
   readonly conversations = CONVERSATIONS;
   readonly previews: Record<string, string> = {
-    store: 'Yes, available in Mango Orange!',
+    store: 'Yes, available in Sunset Orange!',
     support: 'Your refund has been approved.',
     courier: "I'm on my way, ETA 20 mins.",
   };

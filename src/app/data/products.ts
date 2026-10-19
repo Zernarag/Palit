@@ -46,7 +46,7 @@ export const CATEGORIES: Category[] = [
 
 /* ---------------- Variants map ---------------- */
 export const VARIANTS_BY_CAT: Record<string, string[]> = {
-  electronics: ['Black', 'White', 'Mango Orange'],
+  electronics: ['Black', 'White', 'Sunset Orange'],
   fashion:     ['Small', 'Medium', 'Large'],
   home:        ['Standard', 'Large', 'Gift Set'],
   beauty:      ['30ml', '50ml', '100ml'],
@@ -76,7 +76,7 @@ const RAW_PRODUCTS: RawProduct[] = [
   { id:'p2',  name:'Aurora Fast Charger 65W',             cat:'electronics', price:899,             rating:4.6, reviews:1104, sold:1100, stock:76,  badge:{cls:'badge-best',txt:'BEST SELLER'},   desc:'Charge your laptop and phone at the same time with dual-port fast charging. Compact GaN design fits easily in any bag.' },
   { id:'p3',  name:'Bantay Smartwatch Lite',              cat:'electronics', price:2450, old:2999, rating:4.5, reviews:760,  sold:760,  stock:22,  badge:{cls:'badge-sale',txt:'-18%'},         desc:'Track your steps, heart rate, and sleep. Water-resistant with a 10-day battery and customizable watch faces.' },
   { id:'p4',  name:'Tibay Portable Power Bank 20K',       cat:'electronics', price:1150,             rating:4.7, reviews:980,  sold:1900, stock:60,                                                desc:'20,000mAh capacity with fast charging for three devices at once. Built tough for daily travel.' },
-  { id:'p5',  name:'Mango Sun Crossbody Bag',             cat:'fashion',     price:1250,             rating:4.7, reviews:890,  sold:890,  stock:34,  badge:{cls:'badge-new',txt:'NEW'},            desc:'Vegan leather crossbody bag with adjustable strap and secure zip pockets. Fits your essentials without the bulk.' },
+  { id:'p5',  name:'Sunset Sun Crossbody Bag',             cat:'fashion',     price:1250,             rating:4.7, reviews:890,  sold:890,  stock:34,  badge:{cls:'badge-new',txt:'NEW'},            desc:'Vegan leather crossbody bag with adjustable strap and secure zip pockets. Fits your essentials without the bulk.' },
   { id:'p6',  name:'Abaca Weave Tote Bag',                cat:'fashion',     price:1680,             rating:4.9, reviews:430,  sold:430,  stock:18,                                                desc:'Handwoven abaca fiber tote by local artisans. Durable, lightweight, and a statement piece for everyday wear.' },
   { id:'p7',  name:'Puti Essential Cotton Tee',           cat:'fashion',     price:299,  old:399,  rating:4.4, reviews:1204, sold:1200, stock:120, badge:{cls:'badge-sale',txt:'-25%'},         desc:'100% breathable cotton tee with a relaxed fit. A wardrobe staple that pairs with everything.' },
   { id:'p8',  name:'Bughaw Denim Jacket',                 cat:'fashion',     price:1450,             rating:4.6, reviews:410,  sold:410,  stock:26,                                                desc:'Classic washed denim jacket with a modern relaxed cut. Layer-ready for cooler evenings.' },

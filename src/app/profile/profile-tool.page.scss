@@ -7,7 +7,7 @@
 .tool-row select { border: 0; background: transparent; color: var(--ink-soft); font: inherit; }
 .profile-edit-form { max-width: 520px; }
 .profile-edit-form .btn { margin-top: 8px; }
-.points-card { display: grid; gap: 8px; padding: 20px; color: #fff; background: linear-gradient(120deg, var(--mango), var(--mango-dark)); }
+.points-card { display: grid; gap: 8px; padding: 20px; color: #fff; background: linear-gradient(120deg, var(--ink), var(--ink-soft)); }
 .points-card strong { font-family: var(--font-display); font-size: 28px; }
 .points-track { height: 6px; overflow: hidden; background: rgb(255 255 255 / 35%); border-radius: 4px; }
 .points-track span { display: block; height: 100%; background: #fff; border-radius: inherit; }

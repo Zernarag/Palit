@@ -57,5 +57,5 @@
   border: 3px solid var(--canvas);
 }
 .tl-item.done::before  { background: var(--palm); }
-.tl-item.now::before   { background: var(--mango); box-shadow: 0 0 0 4px var(--mango-light); }
+.tl-item.now::before   { background: var(--ink); box-shadow: 0 0 0 4px var(--ink-soft); }
 .tl-item.pending b     { color: var(--ink-faint); }

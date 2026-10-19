@@ -24,7 +24,7 @@ export class ChatPage implements OnInit {
     store: [
       { from: 'them', text: 'Hi Juan! Welcome to Palit Official Store. How can we help today?' },
       { from: 'me', text: 'Is the Palm Buds Pro available in white?' },
-      { from: 'them', text: 'Yes! We have White, Black, and Mango Orange in stock.' },
+      { from: 'them', text: 'Yes! We have White, Black, and Sunset Orange in stock.' },
     ],
     support: [{ from: 'them', text: 'Your refund has been approved and will reflect in 3–5 business days.' }],
     courier: [{ from: 'them', text: "I'm on my way, ETA 20 mins." }],

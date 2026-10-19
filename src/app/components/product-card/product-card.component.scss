@@ -15,10 +15,10 @@
 .badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; }
 .badge-sale { background: var(--guava); color: #fff; }
 .badge-new { background: var(--palm-dark); color: #fff; }
-.badge-best { background: var(--mango-light); color: var(--mango-dark); }
+.badge-best { background: var(--palm-light); color: var(--palm-dark); }
 .price-old { margin-left: 6px; color: var(--ink-faint); font-size: 12px; text-decoration: line-through; white-space: nowrap; }
 .disc-chip { margin-left: 5px; padding: 2px 5px; border-radius: 4px; background: var(--guava); color: #fff; font-size: 9px; font-weight: 800; white-space: nowrap; }
-.mall-tag { display: inline-block; margin-right: 5px; padding: 2px 6px; border-radius: 3px; background: var(--ink); color: var(--mango); font-size: 9px; font-weight: 800; vertical-align: middle; }
+.mall-tag { display: inline-block; margin-right: 5px; padding: 2px 6px; border-radius: 3px; background: var(--ink); color: var(--palm); font-size: 9px; font-weight: 800; vertical-align: middle; }
 
 .pimg-wrap {
   position: relative;
@@ -46,7 +46,7 @@
 
 .pname {
   font-size: 13px; font-weight: 600; line-height: 1.3; height: 34px; margin-bottom: 6px;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
 .rating { gap: 4px; }

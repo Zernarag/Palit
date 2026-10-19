@@ -17,7 +17,7 @@ export const NOTIFICATIONS: Notification[] = [
   { icon: 'icon-bolt',         title: 'Flash Sale starts in 1 hour!',    body: 'Up to 50% off electronics & fashion finds.',              time: '1h ago',  unread: true  },
   { icon: 'icon-check-circle', title: 'Order delivered',                 body: 'PLT-10198 was delivered successfully. Rate your experience!', time: '2d ago', unread: false },
   { icon: 'icon-ticket',       title: 'New coupon for you',              body: 'Use PALIT100 for ₱100 off your next order.',              time: '3d ago',  unread: false },
-  { icon: 'icon-chat',         title: 'Seller replied to your message',  body: 'Palit Official Store: "Yes, available in Mango Orange!"',  time: '4d ago',  unread: false },
+  { icon: 'icon-chat',         title: 'Seller replied to your message',  body: 'Palit Official Store: "Yes, available in Sunset Orange!"',  time: '4d ago',  unread: false },
 ];
 
 /* ---------------- FAQs ---------------- */

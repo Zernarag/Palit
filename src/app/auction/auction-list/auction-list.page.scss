@@ -47,7 +47,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  background: var(--mango-light);
+  background: var(--palm-light);
   overflow: hidden;
 }
 .aimg-wrap img {
@@ -129,7 +129,7 @@
   width: 88px;
   height: 88px;
   border-radius: 26px;
-  background: var(--mango-light);
+  background: var(--palm-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,7 +138,7 @@
 .empty-icon {
   width: 40px;
   height: 40px;
-  stroke: var(--mango-dark);
+  stroke: var(--palm-dark);
   fill: none;
   stroke-width: 1.6;
   stroke-linecap: round;
