@@ -1,18 +1,28 @@
-<ion-content [fullscreen]="true" class="page-content">
+﻿<ion-content [fullscreen]="true" class="page-content">
 
-  <!-- ============ TOP BAR (dark) ============ -->
-  <div class="topbar auction-topbar">
-    <img class="topbar-logo" src="assets/icon/logo-mark.png" alt="Palit">
-
-    <div class="searchbar auction-searchbar" (click)="goTo('/search')">
-      <svg class="icon"><use href="#icon-search"/></svg>
-      <span>Search auctions...</span>
-    </div>
-
-    <button class="iconbtn" (click)="goTo('/notifications')" aria-label="Notifications">
-      <svg class="icon"><use href="#icon-bell"/></svg>
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar home-topbar">
+    <button class="brand-lockup" type="button" (click)="goTo('/tabs/home')" aria-label="Palit home">
+      <img class="home-logo" src="assets/icon/logo-mark.png" alt="">
+      <span>Palit</span>
     </button>
-  </div>
+
+    <button class="searchbar" type="button" (click)="goTo('/search')" aria-label="Search products">
+      <svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg>
+      <span>Search local finds</span>
+    </button>
+
+    <div class="header-actions">
+      <button class="iconbtn" type="button" (click)="goTo('/notifications')" aria-label="Notifications">
+        <svg class="icon" aria-hidden="true"><use href="#icon-bell"/></svg>
+      </button>
+      <button class="iconbtn" type="button" (click)="goTo('/cart')"
+              [attr.aria-label]="cartCount ? 'Cart, ' + cartCount + ' items' : 'Cart'">
+        <svg class="icon" aria-hidden="true"><use href="#icon-cart"/></svg>
+        <span class="cart-badge-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </button>
+    </div>
+  </header>
 
   <div class="screen-scroll">
 

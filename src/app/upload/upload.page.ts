@@ -124,7 +124,7 @@ export class UploadPage {
 
   /* ==================== SUBMIT ==================== */
   get canSubmit(): boolean {
-    if (!this.draft.title.trim()) return false;
+    if (!this.draft.title.trim() || !this.draft.photos.length) return false;
 
     if (this.draft.type === 'fixed') {
       return !!this.draft.price && this.draft.price > 0;
@@ -140,7 +140,7 @@ export class UploadPage {
   }
 
   private submitFixed(): void {
-    if (!this.draft.price || this.draft.price <= 0) return;
+    if (!this.draft.photos.length || !this.draft.price || this.draft.price <= 0) return;
 
     const id = 'p' + Date.now();
     PRODUCTS.unshift({
@@ -155,7 +155,7 @@ export class UploadPage {
       badge: { cls: 'badge-new', txt: 'NEW' },
       desc: this.draft.description || 'No description provided.',
       mall: false,
-      img: this.draft.photos[0] || 'assets/items/temp.webp',
+      img: this.draft.photos[0],
       variants: VARIANTS_BY_CAT[this.draft.category] || ['Standard'],
     });
 
@@ -164,7 +164,7 @@ export class UploadPage {
   }
 
   private submitAuction(): void {
-    if (!this.draft.startingBid || this.draft.startingBid <= 0) return;
+    if (!this.draft.photos.length || !this.draft.startingBid || this.draft.startingBid <= 0) return;
 
     const id = 'a' + Date.now();
     const catOk = AUCTION_CATEGORIES.some((c) => c.id === this.draft.category);
@@ -184,7 +184,7 @@ export class UploadPage {
       currentBid: this.draft.startingBid,
       bidCount: 0,
       desc: this.draft.description || 'No description provided.',
-      img: this.draft.photos[0] || 'assets/items/temp.webp',
+      img: this.draft.photos[0],
     });
 
     this.resetDraft();
@@ -192,7 +192,7 @@ export class UploadPage {
   }
 
   /* ==================== RESET ==================== */
-  private resetDraft(): void {
+  resetDraft(): void {
     this.draft = {
       type: 'fixed',
       photos: [],

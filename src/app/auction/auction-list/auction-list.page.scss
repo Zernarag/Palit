@@ -1,34 +1,8 @@
 .page-content { --background: var(--canvas); }
 
-/* ---------- Top bar (dark variant) ---------- */
-.auction-topbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: linear-gradient(120deg, var(--ink), #452D18);
-}
-
-.topbar-logo {
-  width: 72px;
-  height: 36px;
-  flex: 0 0 auto;
-  object-fit: contain;
-}
-
-.auction-searchbar {
-  border: none;
-  color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.auction-searchbar:active {
-  border-color: var(--mango);
-}
-
 /* ---------- Intro card ---------- */
 .auction-intro {
-  background: linear-gradient(120deg, var(--mango), var(--mango-dark));
+  background: linear-gradient(120deg, var(--palm), var(--palm-dark), var(--palm-deep));
   color: #fff;
 }
 
@@ -111,7 +85,7 @@
   justify-content: center;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(90, 42, 12, 0.14);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
 }
 .heart-svg { width: 16px; height: 16px; }
 

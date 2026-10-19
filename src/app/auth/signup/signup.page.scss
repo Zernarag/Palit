@@ -1,15 +1,196 @@
+/* ===================== SIGNUP PAGE (banner + form) ===================== */
 :host { display: block; }
-.page { min-height: 100vh; background: var(--canvas); padding-bottom: 40px; }
-.topbar { display: flex; align-items: center; gap: var(--s3); padding: var(--s4) var(--s4) var(--s2); }
-.topbar-title { font-size: 18px; font-weight: 800; margin: 0; flex: 1; text-align: center; }
-.spacer { width: 36px; }
 
-.iconbtn {
-  width: 40px; height: 40px; border-radius: var(--r-full); border: none; background: var(--card);
-  display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-sm); color: var(--ink);
+.page {
+  min-height: 100vh;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 32px;
 }
 
-.body { padding: var(--s4) var(--s4) 0; }
-.terms { display: flex; align-items: flex-start; gap: 8px; margin-bottom: var(--s5); cursor: pointer; line-height: 1.4; color: var(--ink-soft); font-weight: 500; }
+/* ---------- Banner with Palit logo ---------- */
+.banner {
+  position: relative;
+  min-height: 230px;
+  background: linear-gradient(140deg, var(--ink) 0%, #1E3A8A 72%, var(--palm-dark) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #ffffff 5%, rgba(255, 255, 255, 0.85) 38%, rgba(15, 23, 42, 0.15) 100%);
+  pointer-events: none;
+}
+
+.banner-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.banner-logo {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+}
+
+.banner-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.banner-subtitle {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin: 4px 0 0;
+}
+
+/* ---------- Form body ---------- */
+.body {
+  padding: 10px 24px 0;
+  background: var(--card);
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.field-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.form-control {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 13.5px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group:has(.toggle) .form-control { padding-right: 46px; }
+
+.form-control::placeholder { color: var(--ink-faint); }
+
+.form-control:focus {
+  border-color: var(--palm);
+  background: var(--card);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* password eye toggle */
+.toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background var(--tx-fast), color var(--tx-fast);
+}
+
+.toggle:hover { background: var(--canvas-alt); color: var(--ink-soft); }
+
+.toggle .icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* terms */
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: var(--s5);
+  cursor: pointer;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
 .terms input { margin-top: 2px; }
+
+/* main action button */
+.btn-main {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--palm), var(--palm-dark));
+  color: var(--card);
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+  transition: filter 0.3s ease;
+}
+
+.btn-main:hover { filter: brightness(1.06); }
+.btn-main:disabled { opacity: 0.65; cursor: default; }
+
+/* footer switcher */
 .mt-5 { margin-top: var(--s6); }
+
+.form-footer {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+
+.form-footer a {
+  color: var(--palm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.form-footer a:hover { text-decoration: underline; }

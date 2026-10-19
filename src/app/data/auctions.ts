@@ -140,13 +140,24 @@ const RAW_AUCTIONS: RawAuction[] = [
 ];
 
 /* ---------------- Exported auction list ---------------- */
+const AUCTION_IMAGES: Record<string, string> = {
+  a1: 'assets/items/a1.jpg',
+  a2: 'assets/items/a2.jpg',
+  a3: 'assets/items/a3.jpg',
+  a4: 'assets/items/p3.jpg',
+  a5: 'assets/items/a5.jpg',
+  a6: 'assets/items/a6.jpg',
+  a7: 'assets/items/a7.jpg',
+  a8: 'assets/items/p5.jpg',
+};
+
 export const AUCTIONS: Auction[] = RAW_AUCTIONS.map((a) => {
   const realBids = a.bids.filter((b) => !b.isYou);
   const highest = realBids.length ? Math.max(...realBids.map((b) => b.amount)) : 0;
 
   return {
     ...a,
-    img: 'assets/items/temp.webp',
+    img: AUCTION_IMAGES[a.id],
     currentBid: highest || a.startingBid,
     bidCount: realBids.length,
     bids: realBids,

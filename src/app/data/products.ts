@@ -98,7 +98,7 @@ const MALL_IDS = new Set(['p1', 'p2', 'p3', 'p9', 'p13', 'p14', 'p16']);
 export const PRODUCTS: Product[] = RAW_PRODUCTS.map((p) => ({
   ...p,
   mall: MALL_IDS.has(p.id),
-  img: 'assets/items/temp.webp',
+  img: `assets/items/${p.id}.jpg`,
   variants: VARIANTS_BY_CAT[p.cat] || ['Standard'],
 }));
 

@@ -28,7 +28,7 @@
 /* ---------- Hero stats card ---------- */
 .hero-stats {
   margin-top: 16px;
-  background: linear-gradient(120deg, var(--ink), #452D18);
+  background: linear-gradient(120deg, var(--ink), #1E3A8A);
   color: #fff;
 }
 
@@ -70,11 +70,17 @@
   width: 38px;
   height: 44px;
   border: none;
-  background: var(--mango-light);
-  color: var(--mango-dark);
+  background: var(--palm-light);
+  color: var(--palm-dark);
   font-weight: 800;
   cursor: pointer;
   font-size: 16px;
+  transition: background var(--tx-fast), color var(--tx-fast);
+
+  &:hover {
+    background: var(--palm-xlight);
+    color: var(--palm-deep);
+  }
 }
 
 .stepper-amt input {

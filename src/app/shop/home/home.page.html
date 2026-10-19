@@ -1,161 +1,122 @@
 <ion-content [fullscreen]="true" class="page-content">
+  <div class="home-shell">
+    <header class="topbar home-topbar">
+      <button class="brand-lockup" type="button" (click)="goTo('/tabs/home')" aria-label="Palit home">
+        <img class="home-logo" src="assets/icon/logo-mark.png" alt="">
+        <span>Palit</span>
+      </button>
 
-  <!-- ============ TOP BAR ============ -->
-  <div class="topbar home-topbar">
-    <img class="home-logo" src="assets/icon/logo-white.png" alt="Palit">
+      <button class="searchbar" type="button" (click)="goTo('/search')" aria-label="Search products">
+        <svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg>
+        <span>Search local finds</span>
+      </button>
 
-    <div class="searchbar" (click)="goTo('/search')">
-      <svg class="icon"><use href="#icon-search"/></svg>
-      <span>Search</span>
-    </div>
-
-    <button class="iconbtn" (click)="goTo('/notifications')" aria-label="Notifications">
-      <svg class="icon"><use href="#icon-bell"/></svg>
-    </button>
-
-    <button class="iconbtn" (click)="goTo('/cart')" aria-label="Cart">
-      <svg class="icon"><use href="#icon-cart"/></svg>
-      <span class="cart-badge-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
-    </button>
-  </div>
-
-  <!-- ============ CATEGORY CHIPS ============ -->
-  <div class="hscroll chips-row">
-    <div class="chip active">All</div>
-    <div class="chip" *ngFor="let c of categories" (click)="openCategory(c.id)">
-      <svg class="icon icon-sm" aria-hidden="true">
-        <use [attr.href]="'#' + c.icon"/>
-      </svg>
-      <span>{{ c.name }}</span>
-    </div>
-  </div>
-
-  <!-- ============ HERO BANNER ============ -->
-  <div class="section">
-    <div class="card pad hero-banner">
-      <div class="hero-content">
-        <div class="eyebrow hero-eyebrow">8.8 Sale</div>
-        <div class="display hero-title">
-          Up to 50% off<br>local finds
-        </div>
-        <button class="btn btn-sm hero-btn" (click)="goTo('/flash-sale')">
-          Shop Now
+      <div class="header-actions">
+        <button class="iconbtn" type="button" (click)="goTo('/notifications')" aria-label="Notifications">
+          <svg class="icon" aria-hidden="true"><use href="#icon-bell"/></svg>
+        </button>
+        <button class="iconbtn" type="button" (click)="goTo('/cart')"
+                [attr.aria-label]="cartCount ? 'Cart, ' + cartCount + ' items' : 'Cart'">
+          <svg class="icon" aria-hidden="true"><use href="#icon-cart"/></svg>
+          <span class="cart-badge-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
         </button>
       </div>
+    </header>
 
-      <svg class="hero-bag" aria-hidden="true">
-        <use href="#icon-shopping-bag"/>
-      </svg>
-    </div>
-  </div>
-
-  <!-- ============ SHOP BY CATEGORY ============ -->
-  <div class="section section-header">
-    <h2 class="section-title">Shop by Category</h2>
-    <span class="link small" (click)="goTo('/categories')">See all</span>
-  </div>
-
-  <div class="section" style="padding-top: 12px;">
-    <div class="hscroll">
-      <div class="cat-item" *ngFor="let c of categories" (click)="openCategory(c.id)">
-        <div class="cat-icon">
-          <svg class="cat-svg" aria-hidden="true">
-            <use [attr.href]="'#' + c.icon"/>
-          </svg>
+    <main>
+      <section class="section campaign-section" aria-labelledby="campaign-title">
+        <div class="hero-banner">
+          <div class="hero-content">
+            <span class="eyebrow hero-eyebrow">Good things, found nearby</span>
+            <h1 class="hero-title" id="campaign-title">Good finds.<br>Better prices.</h1>
+            <p class="hero-copy">Save up to 50% on picks from local sellers.</p>
+            <button class="btn btn-sm hero-btn" type="button" (click)="goTo('/flash-sale')">Shop the sale</button>
+          </div>
+          <div class="hero-product-frame" aria-hidden="true">
+            <img src="assets/items/p1.jpg" alt="" fetchpriority="high">
+          </div>
+          <span class="hero-mark" aria-hidden="true">PALIT<br>FINDS</span>
         </div>
-        <div class="small cat-name">{{ c.name }}</div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <!-- ============ FLASH SALE ============ -->
-  <div class="section section-header">
-    <div class="row" style="gap: 8px;">
-      <svg class="icon icon-flash" aria-hidden="true">
-        <use href="#icon-bolt"/>
-      </svg>
-      <h2 class="section-title">Flash Sale</h2>
-    </div>
-    <span class="link small" (click)="goTo('/flash-sale')">See all</span>
-  </div>
-
-  <div class="section" style="padding-top: 12px;">
-    <div class="small" style="margin-bottom: 12px;">
-      <span class="badge badge-sale">ENDS IN</span>
-      <b class="countdown-text">02:14:37</b>
-    </div>
-
-    <div class="hscroll">
-      <div class="hcard-wrap" *ngFor="let p of flashProducts">
-        <div class="pcard" (click)="openProduct(p.id)">
-          <div class="pimg-wrap">
-            <img [src]="p.img" [alt]="p.name" loading="lazy">
-            <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">
-              {{ p.badge.txt }}
+      <section class="section category-section" aria-labelledby="category-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow section-kicker">Browse the good stuff</span>
+            <h2 class="section-title" id="category-title">Shop by category</h2>
+          </div>
+          <button class="section-link" type="button" (click)="goTo('/categories')">See all</button>
+        </div>
+        <div class="hscroll category-rail">
+          <button class="cat-item" type="button" *ngFor="let c of categories" (click)="openCategory(c.id)">
+            <span class="cat-icon">
+              <svg class="cat-svg" aria-hidden="true"><use [attr.href]="'#' + c.icon"/></svg>
             </span>
-            <button class="heart" (click)="onHeart(p.id, $event)" aria-label="Add to wishlist">
-              <svg class="icon heart-svg"
-                   [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'"
-                   [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'">
-                <use href="#icon-heart"/>
-              </svg>
-            </button>
-          </div>
-          <div class="pbody">
-            <div class="pname">{{ p.name }}</div>
-            <div class="row" style="gap: 4px;">
-              <span class="stars">{{ starStr(p.rating) }}</span>
-              <span class="small faint">{{ p.rating }}</span>
-            </div>
-            <div class="prow">
-              <span class="price-tag">{{ formatPrice(p.price) }}</span>
-              <span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span>
-            </div>
-            <div class="pmeta">{{ p.sold }} sold</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ RECOMMENDED ============ -->
-  <div class="section section-header">
-    <h2 class="section-title">Recommended for You</h2>
-  </div>
-
-  <div class="section" style="padding-top: 12px;">
-    <div class="grid2">
-      <div class="pcard" *ngFor="let p of recommended" (click)="openProduct(p.id)">
-        <div class="pimg-wrap">
-          <img [src]="p.img" [alt]="p.name" loading="lazy">
-          <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">
-            {{ p.badge.txt }}
-          </span>
-          <button class="heart" (click)="onHeart(p.id, $event)" aria-label="Add to wishlist">
-            <svg class="icon heart-svg"
-                 [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'"
-                 [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'">
-              <use href="#icon-heart"/>
-            </svg>
+            <span class="cat-name">{{ c.name }}</span>
           </button>
         </div>
-        <div class="pbody">
-          <div class="pname">
-            <span class="mall-tag" *ngIf="p.mall">Mall</span>{{ p.name }}
-          </div>
-          <div class="row" style="gap: 4px;">
-            <span class="stars">{{ starStr(p.rating) }}</span>
-            <span class="small faint">{{ p.rating }}</span>
-          </div>
-          <div class="prow">
-            <span class="price-tag">{{ formatPrice(p.price) }}</span>
-            <span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span>
-          </div>
-          <div class="pmeta">{{ p.sold }} sold</div>
-        </div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <div style="height: 40px;"></div>
+      <section class="section product-section" aria-labelledby="sale-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow section-kicker">Limited-time deals</span>
+            <h2 class="section-title" id="sale-title">Flash Sale</h2>
+          </div>
+          <button class="section-link" type="button" (click)="goTo('/flash-sale')">See all</button>
+        </div>
+        <div class="hscroll product-rail">
+          <article class="pcard hcard-wrap" *ngFor="let p of flashProducts">
+            <button class="product-main" type="button" (click)="openProduct(p.id)" [attr.aria-label]="p.name + ', ' + formatPrice(p.price)">
+              <span class="pimg-wrap">
+                <img [src]="p.img" [alt]="p.name" loading="lazy">
+                <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+              </span>
+              <span class="pbody">
+                <span class="pname">{{ p.name }}</span>
+                <span class="rating-row"><span class="stars">{{ starStr(p.rating) }}</span><span class="rating-value">{{ p.rating }}</span></span>
+                <span class="prow"><span class="price-tag">{{ formatPrice(p.price) }}</span><span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span></span>
+                <span class="pmeta">{{ p.sold }} sold</span>
+              </span>
+            </button>
+            <button class="heart" type="button" (click)="onHeart(p.id, $event)"
+                    [attr.aria-label]="isWished(p.id) ? 'Remove ' + p.name + ' from wishlist' : 'Add ' + p.name + ' to wishlist'"
+                    [attr.aria-pressed]="isWished(p.id)">
+              <svg class="icon heart-svg" [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'" [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'" aria-hidden="true"><use href="#icon-heart"/></svg>
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section recommended-section" aria-labelledby="recommended-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow section-kicker">Picked for you</span>
+            <h2 class="section-title" id="recommended-title">Worth a closer look</h2>
+          </div>
+        </div>
+        <div class="grid2 recommended-grid">
+          <article class="pcard" *ngFor="let p of recommended">
+            <button class="product-main" type="button" (click)="openProduct(p.id)" [attr.aria-label]="p.name + ', ' + formatPrice(p.price)">
+              <span class="pimg-wrap">
+                <img [src]="p.img" [alt]="p.name" loading="lazy">
+                <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+              </span>
+              <span class="pbody">
+                <span class="pname"><span class="mall-tag" *ngIf="p.mall">Mall</span>{{ p.name }}</span>
+                <span class="rating-row"><span class="stars">{{ starStr(p.rating) }}</span><span class="rating-value">{{ p.rating }}</span></span>
+                <span class="prow"><span class="price-tag">{{ formatPrice(p.price) }}</span><span class="price-old" *ngIf="p.old">{{ formatPrice(p.old) }}</span></span>
+                <span class="pmeta">{{ p.sold }} sold</span>
+              </span>
+            </button>
+            <button class="heart" type="button" (click)="onHeart(p.id, $event)"
+                    [attr.aria-label]="isWished(p.id) ? 'Remove ' + p.name + ' from wishlist' : 'Add ' + p.name + ' to wishlist'"
+                    [attr.aria-pressed]="isWished(p.id)">
+              <svg class="icon heart-svg" [style.stroke]="isWished(p.id) ? 'var(--guava)' : 'var(--ink-faint)'" [style.fill]="isWished(p.id) ? 'var(--guava)' : 'none'" aria-hidden="true"><use href="#icon-heart"/></svg>
+            </button>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
 </ion-content>

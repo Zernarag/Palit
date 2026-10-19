@@ -1,56 +1,56 @@
 :root {
   color-scheme: light;
 
-  /* ── Core ink/surface palette ── */
-  --ink: #1C1008;
-  --ink-soft: #5A4333;
-  --ink-muted: #6B5847;
-  --ink-faint: #9A7F6E;
-  --canvas: #FDF6EE;
-  --canvas-alt: #F5EDE0;
+  /* ── Core ink/surface palette (Navy & White) ── */
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --ink-muted: #475569;
+  --ink-faint: #64748B;
+  --canvas: #F8FAFC;
+  --canvas-alt: #F1F5F9;
   --card: #FFFFFF;
-  --card-elevated: #FFFCF9;
+  --card-elevated: #FFFFFF;
 
-  /* ── Brand palette ── */
-  --palm: #F04E1A;
-  --palm-dark: #BE3A0C;
-  --palm-deep: #952D09;
-  --palm-light: #FDE8DE;
-  --palm-xlight: #FFF4F0;
+  /* ── Brand palette (Electric Blue) ── */
+  --palm: #3B82F6;
+  --palm-dark: #2563EB;
+  --palm-deep: #1D4ED8;
+  --palm-light: #EFF6FF;
+  --palm-xlight: #DBEAFE;
 
-  --mango: #FF7800;
-  --mango-dark: #E06000;
-  --mango-light: #FFF0DC;
+  --mango: #F3B743;
+  --mango-dark: #8A5A10;
+  --mango-light: #FFF2CF;
 
-  --guava: #E02448;
-  --guava-light: #FFE5EA;
-  --guava-dark: #B81A38;
+  --guava: #D94752;
+  --guava-light: #FCE8E8;
+  --guava-dark: #A52F3A;
 
-  --success: #1F7A48;
-  --success-light: #DFF2EA;
+  --success: #16724D;
+  --success-light: #DDF1E7;
 
-  --sale: #E02448;
-  --line: #EDE0D0;
-  --line-soft: #F5EDE0;
-  --star: #C49A0A;
-  --star-fill: #F5C518;
+  --sale: #D94752;
+  --line: #E2E8F0;
+  --line-soft: #F1F5F9;
+  --star: #8A5A10;
+  --star-fill: #E3A926;
 
-  /* ── Shadows ── */
-  --shadow: 0 16px 40px rgba(80, 32, 8, 0.18);
-  --shadow-md: 0 8px 24px rgba(80, 32, 8, 0.12);
-  --shadow-sm: 0 2px 8px rgba(80, 32, 8, 0.07);
-  --shadow-card: 0 1px 3px rgba(80, 32, 8, 0.04), 0 6px 18px rgba(80, 32, 8, 0.08);
-  --shadow-float: 0 20px 48px rgba(80, 32, 8, 0.22);
-  --focus-ring: 0 0 0 3px rgba(190, 58, 12, 0.32);
+  /* ── Shadows (Navy tinted) ── */
+  --shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.09);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 16px rgba(15, 23, 42, 0.06);
+  --shadow-float: 0 20px 48px rgba(15, 23, 42, 0.16);
+  --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.28);
 
   /* ── Typography ── */
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-ui: 'Public Sans', system-ui, sans-serif;
+  --font-display: 'Rubik', 'Nunito Sans', sans-serif;
+  --font-ui: 'Nunito Sans', 'Rubik', sans-serif;
   --font-mono: 'Space Mono', monospace;
 
   /* ── Skeleton tokens ── */
-  --sk-base: #EDE0D2;
-  --sk-shine: #FAF3EC;
+  --sk-base: #E2E8F0;
+  --sk-shine: #F8FAFC;
   --sk-radius: 10px;
 
   /* ── Spacing scale ── */
@@ -58,7 +58,7 @@
   --s5: 20px; --s6: 28px; --s7: 40px; --s8: 56px;
 
   /* ── Radius scale ── */
-  --r-xs: 6px; --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px; --r-full: 999px;
+  --r-xs: 4px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px; --r-full: 999px;
 
   /* ── Transitions ── */
   --tx-fast: 0.12s cubic-bezier(0.4, 0, 0.2, 1);

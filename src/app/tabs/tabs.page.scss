@@ -7,38 +7,38 @@ ion-tabs {
 }
 
 .palit-tabbar {
-  height: calc(64px + env(safe-area-inset-bottom));
+  height: calc(68px + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
 
   background: var(--card);
   border-top: 1px solid var(--line);
-  box-shadow: 0 -2px 16px rgba(80, 32, 8, 0.08);
+  box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.06);
 
   --border: none;
   --background: var(--card);
-  --color: var(--ink-faint);
+  --color: var(--ink-muted);
   --color-selected: var(--palm);
 }
 
 /* ---------- Individual tab button ---------- */
 .palit-tab {
-  --color: var(--ink-faint);
+  --color: var(--ink-muted);
   --color-selected: var(--palm);
-  --padding-top: 8px;
-  --padding-bottom: 6px;
+  --padding-top: 5px;
+  --padding-bottom: 5px;
   --ripple-color: transparent;
 
   position: relative;
 
   ion-icon.tab-icon {
-    font-size: 22px;
+    font-size: 21px;
     transition: transform var(--tx-fast), color var(--tx-fast);
   }
 
   ion-label {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     margin-top: 3px;
     transition: color var(--tx-fast);
   }
@@ -54,23 +54,33 @@ ion-tabs {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 28px;
+    width: 24px;
     height: 3px;
-    border-radius: 0 0 6px 6px;
-    background: linear-gradient(90deg, var(--palm), var(--palm-dark));
+    border-radius: 0 0 4px 4px;
+    background: var(--palm);
   }
 }
 
-/* Upload tab — accent CTA */
+/* Upload tab â€” accent CTA */
 ion-tab-button[tab="upload"].palit-tab ion-icon.tab-icon {
-  font-size: 26px;
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--palm);
+  color: #fff;
+  font-size: 24px;
+}
+
+ion-tab-button[tab="upload"].palit-tab ion-label {
+  min-height: 15px;
+  line-height: 15px;
+  overflow: visible;
 }
 
 /* ---------- Badge (cart / messages) ---------- */
 ion-badge.cart-badge,
 ion-badge.msg-badge {
   position: absolute;
-  top: 6px;
+  top: 4px;
   right: 20%;
 
   min-width: 16px;
@@ -82,7 +92,7 @@ ion-badge.msg-badge {
   line-height: 1;
 
   border-radius: 999px;
-  background: var(--guava);
+  background: var(--guava-dark);
   color: #fff;
 
   display: flex;
@@ -91,3 +101,4 @@ ion-badge.msg-badge {
 
   box-shadow: 0 0 0 2px var(--card);
 }
+

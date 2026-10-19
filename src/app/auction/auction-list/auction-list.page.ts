@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
+import { CartService } from '../../data/cart';
 import {
   AUCTIONS,
   AUCTION_CATEGORIES,
@@ -31,7 +32,10 @@ export class AuctionListPage implements OnInit, OnDestroy {
   formatPrice = formatPrice;
   formatCountdown = formatCountdown;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cart: CartService,
+  ) {}
 
   ngOnInit(): void {
     this.applyFilter();
@@ -43,6 +47,7 @@ export class AuctionListPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter(): void {
+    this.cartCount = this.cart.count();
     this.applyFilter();
   }
 

@@ -1,34 +1,68 @@
-<ion-content [fullscreen]="true" class="page-content">
+<ion-content [fullscreen]="true" class="page-content upload-page-content">
 
   <!-- ============ TOP BAR ============ -->
-  <div class="topbar bordered">
-    <div class="topbar-title">Sell an Item</div>
-  </div>
+  <header class="topbar bordered upload-topbar">
+    <div class="topbar-title-group">
+      <h1 class="topbar-title">Sell an Item</h1>
+      <span class="faint small">Create marketplace or auction listing</span>
+    </div>
+    @if (draft.title.trim() || draft.photos.length > 0 || draft.price || draft.startingBid) {
+      <button type="button" class="link reset-link" (click)="resetDraft()">Reset</button>
+    }
+  </header>
 
-  <div class="section" style="padding-top: 16px;">
+  <div class="section upload-shell">
+
+    <!-- ============ SELLER HINT BANNER ============ -->
+    <div class="seller-banner card">
+      <div class="seller-banner-icon">
+        <svg class="icon"><use href="#icon-sparkle"/></svg>
+      </div>
+      <div class="seller-banner-text">
+        <div class="seller-banner-title">Zero Listing Fees</div>
+        <div class="small faint">List instantly to reach thousands of verified local buyers.</div>
+      </div>
+    </div>
 
     <!-- ============ LISTING TYPE ============ -->
-    <div class="small label">LISTING TYPE</div>
+    <div class="form-group-label" style="margin-top: 16px;">1. CHOOSE LISTING TYPE</div>
 
-    <div class="segment">
+    <div class="segment-cards">
       <button
+        type="button"
+        class="segment-card"
         [class.active]="draft.type === 'fixed'"
         (click)="setType('fixed')">
-        Fixed Price
+        <div class="segment-card-icon">
+          <svg class="icon"><use href="#icon-tag"/></svg>
+        </div>
+        <div class="segment-card-content">
+          <div class="segment-card-title">Fixed Price</div>
+          <div class="segment-card-desc">Sell instantly at your set asking price</div>
+        </div>
+        <div class="segment-radio"></div>
       </button>
 
       <button
+        type="button"
+        class="segment-card"
         [class.active]="draft.type === 'auction'"
         (click)="setType('auction')">
-        <svg class="icon icon-sm"><use href="#icon-gavel"/></svg>
-        Auction
+        <div class="segment-card-icon">
+          <svg class="icon"><use href="#icon-gavel"/></svg>
+        </div>
+        <div class="segment-card-content">
+          <div class="segment-card-title">Auction</div>
+          <div class="segment-card-desc">Bidding over duration with reserve</div>
+        </div>
+        <div class="segment-radio"></div>
       </button>
     </div>
 
     <div class="small faint type-hint">{{ typeHint }}</div>
 
     <!-- ============ PHOTOS ============ -->
-    <div class="small label" style="margin-top: 20px;">PHOTOS</div>
+    <div class="form-group-label" style="margin-top: 24px;">2. ITEM PHOTOS (UP TO 4)</div>
 
     <input
       type="file"
@@ -38,146 +72,220 @@
       style="display: none;"
       (change)="onPhotosSelected($event)">
 
-    <div class="upload-grid">
-
-      <!-- Filled slots -->
-      <div class="upload-slot filled"
-           *ngFor="let src of draft.photos; let i = index"
-           (click)="removePhoto(i, $event)">
-        <img [src]="src" [alt]="'Listing photo ' + (i + 1)">
-        <span class="remove-badge">
-          <svg class="icon icon-xs"><use href="#icon-close"/></svg>
-        </span>
-      </div>
-
-      <!-- Empty slots -->
-      <label class="upload-slot empty"
-             for="photo-input"
-             *ngFor="let s of emptyPhotoSlots">
-        <svg class="icon icon-lg"><use href="#icon-plus"/></svg>
+    @if (draft.photos.length === 0) {
+      <label for="photo-input" class="upload-dropzone card">
+        <div class="dropzone-icon-wrap">
+          <svg class="icon icon-lg"><use href="#icon-plus-circle"/></svg>
+        </div>
+        <div class="dropzone-text">
+          <span class="dropzone-title">Tap to upload photos</span>
+          <span class="small faint">Clear, well-lit photos sell 3x faster</span>
+        </div>
       </label>
+    } @else {
+      <div class="upload-grid">
+        <!-- Filled slots -->
+        <div class="upload-slot filled card"
+             *ngFor="let src of draft.photos; let i = index"
+             (click)="removePhoto(i, $event)">
+          <img [src]="src" [alt]="'Listing photo ' + (i + 1)">
+          @if (i === 0) {
+            <span class="cover-badge">COVER</span>
+          }
+          <button type="button" class="remove-badge" aria-label="Remove photo">
+            <svg class="icon icon-xs"><use href="#icon-close"/></svg>
+          </button>
+        </div>
 
-    </div>
-
-    <div class="small faint" style="margin-top: 6px;">
-      Up to 4 photos. Tap a photo to remove it.
-    </div>
-
-    <!-- ============ ITEM TITLE ============ -->
-    <div class="field" style="margin-top: 20px;">
-      <label>Item title</label>
-      <input
-        class="input"
-        type="text"
-        placeholder="e.g. Vintage Film Camera, working condition"
-        [(ngModel)]="draft.title">
-    </div>
-
-    <!-- ============ CATEGORY ============ -->
-    <div class="field">
-      <label>Category</label>
-      <select class="select" [(ngModel)]="draft.category">
-        <option *ngFor="let c of categories" [value]="c.id">
-          {{ c.name }}
-        </option>
-      </select>
-    </div>
-
-    <!-- ============ CONDITION ============ -->
-    <div class="field">
-      <label>Condition</label>
-      <select class="select" [(ngModel)]="draft.condition">
-        <option *ngFor="let c of conditions" [value]="c">{{ c }}</option>
-      </select>
-    </div>
-
-    <!-- ============ DESCRIPTION ============ -->
-    <div class="field">
-      <label>Description</label>
-      <textarea
-        class="textarea"
-        placeholder="Describe the item's condition, dimensions, and any flaws..."
-        [(ngModel)]="draft.description">
-      </textarea>
-    </div>
-
-    <!-- ============ FIXED PRICE FIELDS ============ -->
-    <ng-container *ngIf="draft.type === 'fixed'">
-      <div class="field">
-        <label>Price (₱)</label>
-        <input
-          class="input"
-          type="number"
-          inputmode="numeric"
-          placeholder="e.g. 799"
-          [(ngModel)]="draft.price">
+        <!-- Empty slots -->
+        <label class="upload-slot empty card"
+               for="photo-input"
+               *ngFor="let s of emptyPhotoSlots">
+          <svg class="icon"><use href="#icon-plus"/></svg>
+          <span class="small faint slot-label">Add</span>
+        </label>
       </div>
-    </ng-container>
+    }
 
-    <!-- ============ AUCTION FIELDS ============ -->
-    <ng-container *ngIf="draft.type === 'auction'">
-      <div class="field">
-        <label>Starting bid (₱)</label>
-        <input
-          class="input"
-          type="number"
-          inputmode="numeric"
-          placeholder="e.g. 150"
-          [(ngModel)]="draft.startingBid">
+    <!-- ============ CARD: ITEM DETAILS ============ -->
+    <div class="form-card card" style="margin-top: 24px;">
+      <div class="form-card-header">
+        <svg class="icon icon-sm"><use href="#icon-edit"/></svg>
+        <span>Item Details</span>
       </div>
 
-      <div class="field">
-        <label>Reserve price (₱, optional)</label>
-        <input
-          class="input"
-          type="number"
-          inputmode="numeric"
-          placeholder="Minimum you'll accept"
-          [(ngModel)]="draft.reserve">
+      <div class="form-card-body">
+        <!-- Item title -->
+        <div class="field">
+          <label>Item title</label>
+          <input
+            class="input"
+            type="text"
+            placeholder="e.g. Vintage Film Camera in pristine condition"
+            [(ngModel)]="draft.title">
+        </div>
+
+        <!-- Category -->
+        <div class="field">
+          <label>Category</label>
+          <div class="select-wrapper">
+            <select class="select" [(ngModel)]="draft.category">
+              <option *ngFor="let c of categories" [value]="c.id">
+                {{ c.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Condition -->
+        <div class="field">
+          <label>Condition</label>
+          <div class="select-wrapper">
+            <select class="select" [(ngModel)]="draft.condition">
+              <option *ngFor="let c of conditions" [value]="c">{{ c }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="field" style="margin-bottom: 0;">
+          <label>Description & Details</label>
+          <textarea
+            class="textarea"
+            placeholder="Describe the item's condition, exact dimensions, inclusions, and any minor flaws..."
+            [(ngModel)]="draft.description">
+          </textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CARD: PRICING & TERMS ============ -->
+    <div class="form-card card" style="margin-top: 16px;">
+      <div class="form-card-header">
+        <svg class="icon icon-sm"><use href="#icon-tag"/></svg>
+        <span>{{ draft.type === 'fixed' ? 'Pricing & Payment' : 'Auction Settings' }}</span>
       </div>
 
-      <div class="field">
-        <label>Auction duration</label>
-        <select class="select" [(ngModel)]="draft.durationDays">
-          <option *ngFor="let d of durations" [ngValue]="d.value">
-            {{ d.label }}
-          </option>
-        </select>
+      <div class="form-card-body">
+        <!-- Fixed Price Fields -->
+        @if (draft.type === 'fixed') {
+          <div class="field" style="margin-bottom: 0;">
+            <label>Asking Price (₱)</label>
+            <div class="input-group">
+              <span class="input-prefix">₱</span>
+              <input
+                class="input input-prefixed"
+                type="number"
+                inputmode="numeric"
+                placeholder="0.00"
+                [(ngModel)]="draft.price">
+            </div>
+            <span class="small faint" style="margin-top: 4px; display: block;">You keep 100% of the sale price. No hidden transaction fees.</span>
+          </div>
+        }
+
+        <!-- Auction Fields -->
+        @if (draft.type === 'auction') {
+          <div class="field">
+            <label>Starting Bid (₱)</label>
+            <div class="input-group">
+              <span class="input-prefix">₱</span>
+              <input
+                class="input input-prefixed"
+                type="number"
+                inputmode="numeric"
+                placeholder="150"
+                [(ngModel)]="draft.startingBid">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Reserve Price (₱, Optional)</label>
+            <div class="input-group">
+              <span class="input-prefix">₱</span>
+              <input
+                class="input input-prefixed"
+                type="number"
+                inputmode="numeric"
+                placeholder="Minimum acceptable bid (hidden)"
+                [(ngModel)]="draft.reserve">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Auction Duration</label>
+            <div class="select-wrapper">
+              <select class="select" [(ngModel)]="draft.durationDays">
+                <option *ngFor="let d of durations" [ngValue]="d.value">
+                  {{ d.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toggle-row" style="padding-top: 4px; padding-bottom: 0;">
+            <div>
+              <div class="toggle-label">Enable Buy It Now</div>
+              <div class="small faint">Allow buyers to purchase immediately without bidding</div>
+            </div>
+            <button
+              type="button"
+              class="toggle"
+              [class.on]="draft.enableBuyNow"
+              (click)="draft.enableBuyNow = !draft.enableBuyNow">
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- ============ CARD: FULFILLMENT ============ -->
+    <div class="form-card card" style="margin-top: 16px;">
+      <div class="form-card-header">
+        <svg class="icon icon-sm"><use href="#icon-truck"/></svg>
+        <span>Fulfillment & Delivery</span>
       </div>
 
-      <div class="toggle-row">
-        <span class="small toggle-label">Enable Buy It Now</span>
-        <button
-          type="button"
-          class="toggle"
-          [class.on]="draft.enableBuyNow"
-          (click)="draft.enableBuyNow = !draft.enableBuyNow">
-        </button>
+      <div class="form-card-body">
+        <div class="toggle-row" style="padding: 0;">
+          <div>
+            <div class="toggle-label">Local Pickup Only</div>
+            <div class="small faint">Buyer picks up directly from your location</div>
+          </div>
+          <button
+            type="button"
+            class="toggle"
+            [class.on]="draft.pickupOnly"
+            (click)="draft.pickupOnly = !draft.pickupOnly">
+          </button>
+        </div>
       </div>
-    </ng-container>
+    </div>
 
-    <!-- ============ PICKUP TOGGLE ============ -->
-    <div class="toggle-row">
-      <span class="small toggle-label">List as local pickup only</span>
+    <!-- ============ TRUST GUARANTEE BANNER ============ -->
+    <div class="trust-banner card" style="margin-top: 16px;">
+      <div class="trust-icon">
+        <svg class="icon"><use href="#icon-shield"/></svg>
+      </div>
+      <div class="trust-content">
+        <div class="trust-title">Palit Seller Protection</div>
+        <div class="small faint">Guaranteed payouts on confirmed deliveries and secure in-app messaging.</div>
+      </div>
+    </div>
+
+    <!-- ============ SUBMIT BUTTON ============ -->
+    <div class="submit-action-wrap" style="margin-top: 24px;">
       <button
-        type="button"
-        class="toggle"
-        [class.on]="draft.pickupOnly"
-        (click)="draft.pickupOnly = !draft.pickupOnly">
+        class="btn btn-primary btn-lg"
+        [disabled]="!canSubmit"
+        (click)="submit()">
+        <svg class="icon"><use href="#icon-check"/></svg>
+        <span>Publish Listing</span>
       </button>
-    </div>
 
-    <!-- ============ SUBMIT ============ -->
-    <button
-      class="btn btn-primary"
-      style="margin-top: 16px;"
-      [disabled]="!canSubmit"
-      (click)="submit()">
-      Submit Listing
-    </button>
-
-    <div class="small faint center" style="margin-top: 10px;">
-      Listings are reviewed within 24 hours before going live.
+      <div class="small faint center" style="margin-top: 10px;">
+        Listings are reviewed within 24 hours to ensure marketplace safety.
+      </div>
     </div>
 
   </div>

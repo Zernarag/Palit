@@ -17,12 +17,18 @@ export class SignupPage {
   mobile = '';
   email = '';
   password = '';
+  confirmPw = '';
   agree = true;
   submitting = false;
+  showPassword = false;
+  showConfirm = false;
 
   constructor(private router: Router) {}
 
   goBack(): void { this.backNavigation.back('/login'); }
+
+  togglePassword(): void { this.showPassword = !this.showPassword; }
+  toggleConfirmPassword(): void { this.showConfirm = !this.showConfirm; }
 
   createAccount(): void {
     if (this.submitting) return;
