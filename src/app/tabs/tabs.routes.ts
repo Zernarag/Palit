@@ -24,6 +24,13 @@ export const TABS_ROUTES: Routes = [
       import('../upload/upload.page').then((m) => m.UploadPage),
   },
   {
+    path: 'swap-requests',
+    loadComponent: () =>
+      import('../swap/swap-requests/swap-requests.page').then(
+        (m) => m.SwapRequestsPage
+      ),
+  },
+  {
     path: 'messages',
     loadComponent: () =>
       import('../messages/messages-list/messages-list.page').then(

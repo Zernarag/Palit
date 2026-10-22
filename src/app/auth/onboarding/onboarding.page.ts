@@ -4,9 +4,13 @@ import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 
 interface Slide {
-  icon: string;   // SVG symbol id
+  image: string;
+  secondaryImage: string;
+  imageAlt: string;
+  eyebrow: string;
   title: string;
   body: string;
+  badge: string;
 }
 
 @Component({
@@ -19,19 +23,31 @@ interface Slide {
 export class OnboardingPage {
   slides: Slide[] = [
     {
-      icon: 'icon-shopping-bag',
+      image: 'assets/items/p1.jpg',
+      secondaryImage: 'assets/items/p6.jpg',
+      imageAlt: 'Wireless headphones from a local marketplace listing',
+      eyebrow: 'NEARBY FINDS',
       title: 'Discover Local Finds',
       body: 'Thousands of products from trusted sellers near you, all in one app.',
+      badge: 'Made for your neighborhood',
     },
     {
-      icon: 'icon-bolt',
-      title: 'Flash Deals Daily',
+      image: 'assets/items/p16.jpg',
+      secondaryImage: 'assets/items/p3.jpg',
+      imageAlt: 'Pink running shoe from a limited-time product deal',
+      eyebrow: 'LIMITED-TIME DEALS',
+      title: 'Good finds. Better prices.',
       body: 'Grab limited-time discounts before they run out — new drops every day.',
+      badge: 'Fresh deals, every day',
     },
     {
-      icon: 'icon-truck',
-      title: 'Fast, Tracked Delivery',
+      image: 'assets/items/p5.jpg',
+      secondaryImage: 'assets/items/p9.jpg',
+      imageAlt: 'Crossbody bag available from a local seller',
+      eyebrow: 'FROM SELLER TO DOORSTEP',
+      title: 'Shop nearby. Track every step.',
       body: 'Watch your order move from packed to your doorstep in real time.',
+      badge: 'Delivery updates included',
     },
   ];
 

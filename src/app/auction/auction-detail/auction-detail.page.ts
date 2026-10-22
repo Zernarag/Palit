@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,7 +25,7 @@ export class AuctionDetailPage implements OnInit, OnDestroy {
   private readonly backNavigation = inject(BackNavigationService);
   auction!: Auction;
   bidDraft = 0;
-  now = Date.now();
+  readonly now = signal(Date.now());
 
   formatPrice = formatPrice;
   formatCountdown = formatCountdown;
@@ -40,7 +40,7 @@ export class AuctionDetailPage implements OnInit, OnDestroy {
     this.bidDraft = minNextBid(this.auction);
 
     this.ticker = setInterval(() => {
-      this.now = Date.now();
+      this.now.set(Date.now());
     }, 1000);
   }
 
@@ -50,8 +50,8 @@ export class AuctionDetailPage implements OnInit, OnDestroy {
 
   /* ---------- Derived ---------- */
   get minBid(): number { return minNextBid(this.auction); }
-  get countdown(): string { return formatCountdown(this.auction.endTime - this.now); }
-  get isEnded(): boolean { return this.auction.endTime - this.now <= 0; }
+  get countdown(): string { return formatCountdown(this.auction.endTime - this.now()); }
+  get isEnded(): boolean { return this.auction.endTime - this.now() <= 0; }
   get isWatched(): boolean { return getWishlist().includes(this.auction.id); }
   get hasReserve(): boolean { return this.auction.reserve > 0; }
 
@@ -82,7 +82,7 @@ export class AuctionDetailPage implements OnInit, OnDestroy {
     }
 
     // Anti-sniping: extend by 2 min if bid placed under 2 min remaining
-    if (this.auction.endTime - this.now < 2 * 60e3) {
+    if (this.auction.endTime - this.now() < 2 * 60e3) {
       this.auction.endTime += 2 * 60e3;
     }
 
@@ -93,7 +93,7 @@ export class AuctionDetailPage implements OnInit, OnDestroy {
     if (!this.auction.buyNow) return;
     this.auction.currentBid = this.auction.buyNow;
     this.auction.reserveMet = true;
-    this.auction.endTime = this.now;
+    this.auction.endTime = this.now();
     this.router.navigateByUrl('/order-confirmation');
   }
 

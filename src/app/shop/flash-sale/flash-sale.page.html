@@ -29,6 +29,7 @@
         <div class="pimg-wrap">
           <img [src]="p.img" [alt]="p.name" loading="lazy">
           <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+          <span class="badge swap-availability-badge" *ngIf="p.swapAvailable"><svg class="icon" aria-hidden="true"><use href="#icon-swap-horizontal"/></svg>For Swap</span>
           <button class="heart" (click)="onHeart(p.id, $event)">
             <svg class="icon"
                  style="width: 16px; height: 16px;"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { formatPrice } from '../../data';
 import { WishlistService } from '../../data/wishlist';
@@ -34,8 +34,8 @@ export class AuctionCardComponent implements OnInit, OnDestroy {
   @Output() tap = new EventEmitter<string>();
   @Output() watch = new EventEmitter<string>();
 
-  countdown = '';
-  isEnding = false;
+  readonly countdown = signal('');
+  readonly isEnding = signal(false);
   isWatched = false;
 
   formatPrice = formatPrice;
@@ -55,8 +55,8 @@ export class AuctionCardComponent implements OnInit, OnDestroy {
 
   private refreshCountdown(): void {
     const ms = this.auction.endTime - Date.now();
-    this.countdown = formatCountdown(ms);
-    this.isEnding = ms < 60 * 60 * 1000;
+    this.countdown.set(formatCountdown(ms));
+    this.isEnding.set(ms < 60 * 60 * 1000);
   }
 
   onCardClick(): void {

@@ -184,7 +184,7 @@ export class CheckoutService {
   shipping(): number { return this.delivery().price; }
   giftFee(): number { return this.giftWrap() ? GIFT_WRAP_FEE : 0; }
   total(): number {
-    return Math.max(0, this.cart.subtotal() + this.shipping() + this.giftFee() - this.cart.discount());
+    return Math.max(0, this.cart.checkoutSubtotal() + this.shipping() + this.giftFee() - this.cart.discount());
   }
 
   onCardNumber(value: string): void { this.cardNumber.set(value.replace(/\D/g, '').slice(0, 19)); }
@@ -202,7 +202,7 @@ export class CheckoutService {
       this.couponError.set('Invalid or expired code.');
       return;
     }
-    if (!isCouponEligible(coupon, this.cart.subtotal())) {
+    if (!isCouponEligible(coupon, this.cart.checkoutSubtotal())) {
       this.couponError.set(`Spend at least ₱${coupon.minSpend.toLocaleString('en-PH')} to use ${coupon.code}.`);
       return;
     }
@@ -213,7 +213,7 @@ export class CheckoutService {
   clearCouponError(): void { this.couponError.set(null); }
 
   canContinue(): boolean {
-    return this.cart.lines().length > 0
+    return this.cart.checkoutLines().length > 0
       && !!findAddress(this.selectedAddress())
       && !!findDelivery(this.selectedDelivery())
       && !!findPayment(this.selectedPayment())
@@ -226,14 +226,15 @@ export class CheckoutService {
       id: generateOrderId(),
       date: new Date().toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' }),
       status: 'To Ship',
-      items: this.cart.items().map(({ id, qty, variant }) => ({ id, qty, variant })),
+      items: this.cart.checkoutItems().map(({ id, qty, variant }) => ({ id, qty, variant })),
       total: this.total(),
       payment: this.payment().name,
       address: this.address(),
     };
     addOrder(order);
     this.order.set(order);
-    this.cart.clear();
+    if (this.cart.isBuyNowCheckout()) this.cart.clearBuyNow();
+    else this.cart.clear();
     return order;
   }
 
@@ -247,6 +248,7 @@ export class CheckoutService {
     this.cardCvv.set('');
     this.couponError.set(null);
     this.order.set(null);
+    this.cart.clearBuyNow();
     this.cart.removeCoupon();
   }
 }

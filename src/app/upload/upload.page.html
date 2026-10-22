@@ -6,7 +6,7 @@
       <h1 class="topbar-title">Sell an Item</h1>
       <span class="faint small">Create marketplace or auction listing</span>
     </div>
-    @if (draft.title.trim() || draft.photos.length > 0 || draft.price || draft.startingBid) {
+    @if (draft.title.trim() || draft.photos.length > 0 || draft.price || draft.quantity !== 1 || draft.startingBid || draft.openForSwap) {
       <button type="button" class="link reset-link" (click)="resetDraft()">Reset</button>
     }
   </header>
@@ -57,6 +57,7 @@
         </div>
         <div class="segment-radio"></div>
       </button>
+
     </div>
 
     <div class="small faint type-hint">{{ typeHint }}</div>
@@ -159,6 +160,31 @@
       </div>
     </div>
 
+    <div class="form-card card" style="margin-top: 16px;" *ngIf="draft.type === 'fixed'">
+      <div class="form-card-header">
+        <svg class="icon icon-sm"><use href="#icon-swap-horizontal"/></svg>
+        <span>Swap offers</span>
+      </div>
+      <div class="form-card-body">
+        <div class="toggle-row" style="padding: 0;">
+          <div>
+            <div class="toggle-label">Available for swaps</div>
+            <div id="swap-offer-hint" class="small faint">Allow buyers to send you trade offers for this item.</div>
+          </div>
+          <button
+            type="button"
+            class="toggle"
+            role="switch"
+            aria-label="Available for swaps"
+            aria-describedby="swap-offer-hint"
+            [attr.aria-checked]="draft.openForSwap"
+            [class.on]="draft.openForSwap"
+            (click)="draft.openForSwap = !draft.openForSwap">
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- ============ CARD: PRICING & TERMS ============ -->
     <div class="form-card card" style="margin-top: 16px;">
       <div class="form-card-header">
@@ -181,6 +207,19 @@
                 [(ngModel)]="draft.price">
             </div>
             <span class="small faint" style="margin-top: 4px; display: block;">You keep 100% of the sale price. No hidden transaction fees.</span>
+          </div>
+
+          <div class="field" style="margin-top: 16px; margin-bottom: 0;">
+            <label>Available quantity</label>
+            <input
+              class="input"
+              type="number"
+              inputmode="numeric"
+              min="1"
+              step="1"
+              placeholder="1"
+              [(ngModel)]="draft.quantity">
+            <span class="small faint">How many units are available?</span>
           </div>
         }
 

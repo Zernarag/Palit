@@ -63,7 +63,7 @@
             <img [src]="a.img" [alt]="a.name" loading="lazy">
 
             <span class="countdown-chip" [class.ending]="isEnding(a)">
-              {{ formatCountdown(a.endTime - now) }}
+              {{ formatCountdown(a.endTime - now()) }}
             </span>
 
             <button class="watch-btn"

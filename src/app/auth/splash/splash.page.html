@@ -1,7 +1,65 @@
 <ion-content [fullscreen]="true" class="splash-content">
-  <div class="splash-wrap">
-    <div class="brand">PALIT</div>
+  <div
+    class="splash-wrap"
+    [class.leaving]="leaving"
+    role="button"
+    tabindex="0"
+    aria-label="Skip intro and continue to onboarding"
+    (click)="skip()"
+    (keydown.enter)="skip()"
+    (keydown.space)="skip(); $event.preventDefault()">
+
+    <div class="splash-texture" aria-hidden="true"></div>
+
+    <!-- THE TRADE: two items swap places, then their trails become the Palit mark -->
+    <svg class="stage" viewBox="0 0 160 160" aria-hidden="true">
+
+      <!-- faint orbit trail -->
+      <circle class="trail" cx="80" cy="80" r="40" />
+
+      <!-- rotating pair -->
+      <g class="orbit">
+        <g class="item-pos">
+          <g class="item-shape item-a">
+            <circle cx="40" cy="80" r="13" />
+            <circle class="shine" cx="35.5" cy="75.5" r="3.2" />
+          </g>
+        </g>
+        <g class="item-pos">
+          <g class="item-shape item-b">
+            <rect x="107" y="67" width="26" height="26" rx="7" />
+            <path class="tag" d="M113 80h14M120 73v14" />
+          </g>
+        </g>
+      </g>
+
+      <!-- shockwave when the mark locks in -->
+      <circle class="ring" cx="80" cy="80" r="20" />
+      <circle class="ring ring-2" cx="80" cy="80" r="20" />
+
+      <!-- logo mark (same paths as #logo-mark) drawn stroke by stroke -->
+      <g class="mark-pulse">
+        <g transform="translate(34 34) scale(1.92)" fill="none" stroke="#fff" stroke-width="4.4"
+           stroke-linecap="round" stroke-linejoin="round">
+          <path class="m m1" pathLength="1" d="M9 19c1-6.5 6.8-11.5 14.5-11.5 6 0 11.2 3.1 13.7 7.8" />
+          <path class="m m2" pathLength="1" d="M31 8.5l6.7 6-7.4 3.3" />
+          <path class="m m3" pathLength="1" d="M39 29c-1 6.5-6.8 11.5-14.5 11.5-6 0-11.2-3.1-13.7-7.8" />
+          <path class="m m4" pathLength="1" d="M17 39.5l-6.7-6 7.4-3.3" />
+        </g>
+      </g>
+    </svg>
+
+    <!-- Letters swap in: odd ones drop from above, even ones rise from below -->
+    <div class="brand" aria-label="Palit">
+      <span class="letter" style="--i:0; --dir:-1">P</span>
+      <span class="letter" style="--i:1; --dir:1">A</span>
+      <span class="letter" style="--i:2; --dir:-1">L</span>
+      <span class="letter" style="--i:3; --dir:1">I</span>
+      <span class="letter" style="--i:4; --dir:-1">T</span>
+    </div>
+
     <div class="tagline">Unbox your next favorite thing.</div>
-    <div class="spinner"></div>
+
+    <div class="progress"><span></span></div>
   </div>
 </ion-content>

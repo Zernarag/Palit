@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true" class="page-content">
+	<header class="topbar bordered">
+		<button type="button" class="iconbtn" aria-label="Go back" (click)="back()">
+			<svg class="icon" aria-hidden="true"><use href="#icon-back"/></svg>
+		</button>
+		<div class="topbar-title-group">
+			<h1 class="topbar-title">Offer a Swap</h1>
+			<span class="faint small">Tell the owner what you would like to trade.</span>
+		</div>
+	</header>
+
+	<div class="section swap-create-shell">
+		<form class="swap-create-form" (ngSubmit)="submit()">
+			<div class="form-intro">
+				<span class="eyebrow">Swap proposal</span>
+				<h2>Your offer</h2>
+			</div>
+
+			<div class="field" *ngIf="!isProductTargetFixed">
+				<label for="requested-product">Item you want</label>
+				<div class="select-wrapper">
+					<select id="requested-product" class="select" name="requestedProductId" [(ngModel)]="requestedProductId" required>
+						<option value="" disabled>Select a swap listing</option>
+						<option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="requested-product-summary" *ngIf="requestedProduct as product">
+				<img [src]="product.img" [alt]="product.name">
+				<div class="requested-product-copy">
+					<span class="summary-label">Trading for</span>
+					<strong>{{ product.name }}</strong>
+				</div>
+			</div>
+
+			<div class="field">
+				<label for="offered-title">What you offer</label>
+				<input id="offered-title" class="input" name="title" type="text" maxlength="80" placeholder="e.g. Vintage film camera" [(ngModel)]="title" required>
+			</div>
+
+			<div class="field photo-field">
+				<label>Photos of your item <span class="faint">(optional, up to {{ maxPhotos }})</span></label>
+				<div class="photo-grid">
+					<div class="photo-preview" *ngFor="let photo of photos; let i = index">
+						<img [src]="photo" [alt]="'Photo of ' + (title || 'your item')">
+						<button type="button" class="photo-remove" [attr.aria-label]="'Remove photo ' + (i + 1)" (click)="removePhoto(i)">
+							<svg class="icon icon-sm" aria-hidden="true"><use href="#icon-close"/></svg>
+						</button>
+					</div>
+					<label class="photo-upload-tile" [class.photo-upload-tile-compact]="photos.length > 0" *ngIf="photos.length < maxPhotos">
+						<input type="file" accept="image/*" multiple aria-label="Add photos of your item" (change)="onPhotosSelected($event)">
+						<span class="photo-add-icon">
+							<svg class="icon" aria-hidden="true"><use href="#icon-plus-circle"/></svg>
+						</span>
+						<span class="photo-upload-copy">
+							<strong>{{ photos.length ? 'Add another photo' : 'Tap to upload photos' }}</strong>
+							<small>{{ photos.length ? photos.length + ' of ' + maxPhotos + ' photos added' : 'Clear, well-lit photos make your offer clearer.' }}</small>
+						</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="field">
+				<label for="offered-description">Condition and details</label>
+				<textarea id="offered-description" class="textarea" name="description" rows="4" maxlength="600" placeholder="Describe its condition, included accessories, and any wear." [(ngModel)]="description" required></textarea>
+			</div>
+
+			<div class="field" style="margin-bottom: 0;">
+				<label for="swap-terms">Meetup or swap terms <span class="faint">(optional)</span></label>
+				<textarea id="swap-terms" class="textarea" name="terms" rows="3" maxlength="300" placeholder="Add preferred meetup area or whether you can add cash." [(ngModel)]="terms"></textarea>
+			</div>
+
+			<div class="swap-create-actions">
+				<button type="button" class="btn btn-ghost" (click)="cancel()">Cancel</button>
+				<button type="submit" class="btn btn-primary" [disabled]="!canSubmit">
+					<svg class="icon" aria-hidden="true"><use href="#icon-swap-horizontal"/></svg>
+					Send Offer
+				</button>
+			</div>
+		</form>
+	</div>
+</ion-content>

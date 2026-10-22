@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
-import { CATEGORIES, PRODUCTS, VARIANTS_BY_CAT } from '../data/products';
+import { CATEGORIES, PRODUCTS, VARIANTS_BY_CAT, Product } from '../data/products';
 import { AUCTIONS, AUCTION_CATEGORIES } from '../data/auctions';
 
 type ListingType = 'fixed' | 'auction';
@@ -18,6 +18,7 @@ interface UploadDraft {
 
   /* Fixed price */
   price: number | null;
+  quantity: number;
 
   /* Auction */
   startingBid: number | null;
@@ -27,6 +28,7 @@ interface UploadDraft {
 
   /* Shared */
   pickupOnly: boolean;
+  openForSwap: boolean;
 }
 
 @Component({
@@ -62,11 +64,13 @@ export class UploadPage {
     condition: 'Used — Good',
     description: '',
     price: null,
+    quantity: 1,
     startingBid: null,
     reserve: null,
     durationDays: 3,
     enableBuyNow: false,
     pickupOnly: false,
+    openForSwap: false,
   };
 
   MAX_PHOTOS = 4;
@@ -84,9 +88,11 @@ export class UploadPage {
   }
 
   get typeHint(): string {
-    return this.draft.type === 'fixed'
-      ? 'Sell instantly at a set price — appears on Home & Search.'
-      : 'Buyers bid over a set duration — appears in the Auction tab.';
+    if (this.draft.type === 'fixed')
+      return 'Sell instantly at a set price — appears on Home & Search.';
+    if (this.draft.type === 'auction')
+      return 'Buyers bid over a set duration — appears in the Auction tab.';
+    return 'Buyers bid over a set duration — appears in the Auction tab.';
   }
 
   /* ==================== PHOTOS ==================== */
@@ -127,20 +133,32 @@ export class UploadPage {
     if (!this.draft.title.trim() || !this.draft.photos.length) return false;
 
     if (this.draft.type === 'fixed') {
-      return !!this.draft.price && this.draft.price > 0;
-    } else {
-      return !!this.draft.startingBid && this.draft.startingBid > 0;
+      return !!this.draft.price && this.draft.price > 0 &&
+        Number.isInteger(this.draft.quantity) && this.draft.quantity > 0;
     }
+
+    return !!this.draft.startingBid && this.draft.startingBid > 0;
   }
 
   submit(): void {
     if (!this.draft.title.trim()) return;
-    if (this.draft.type === 'fixed') this.submitFixed();
-    else this.submitAuction();
+    if (!this.draft.photos.length) return;
+
+    if (this.draft.type === 'fixed') {
+      this.submitFixed();
+    } else {
+      this.submitAuction();
+    }
   }
 
   private submitFixed(): void {
-    if (!this.draft.photos.length || !this.draft.price || this.draft.price <= 0) return;
+    if (
+      !this.draft.photos.length ||
+      !this.draft.price ||
+      this.draft.price <= 0 ||
+      !Number.isInteger(this.draft.quantity) ||
+      this.draft.quantity <= 0
+    ) return;
 
     const id = 'p' + Date.now();
     PRODUCTS.unshift({
@@ -151,10 +169,11 @@ export class UploadPage {
       rating: 5.0,
       reviews: 0,
       sold: 0,
-      stock: 1,
+      stock: this.draft.quantity,
       badge: { cls: 'badge-new', txt: 'NEW' },
       desc: this.draft.description || 'No description provided.',
       mall: false,
+      swapAvailable: this.draft.openForSwap,
       img: this.draft.photos[0],
       variants: VARIANTS_BY_CAT[this.draft.category] || ['Standard'],
     });
@@ -201,11 +220,13 @@ export class UploadPage {
       condition: 'Used — Good',
       description: '',
       price: null,
+      quantity: 1,
       startingBid: null,
       reserve: null,
       durationDays: 3,
       enableBuyNow: false,
       pickupOnly: false,
+      openForSwap: false,
     };
   }
 }

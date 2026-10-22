@@ -1,34 +1,49 @@
 <ion-content [fullscreen]="true" class="page-content">
   <div class="ob-wrap">
-
-    <div class="ob-slide">
-      <div class="ob-icon-tile">
-        <svg class="ob-icon" aria-hidden="true">
-          <use [attr.href]="'#' + slides[index].icon"/>
-        </svg>
+    <header class="ob-topbar">
+      <div class="ob-brand" aria-label="Palit">
+        <span class="ob-brand-mark">
+          <svg class="icon" aria-hidden="true"><use href="#logo-mark"/></svg>
+        </span>
+        <span>Palit</span>
       </div>
-      <h1 class="display ob-title">{{ slides[index].title }}</h1>
-      <p class="ob-body">{{ slides[index].body }}</p>
-    </div>
+      <button type="button" class="ob-skip" (click)="skip()">Skip</button>
+    </header>
 
-    <div class="ob-footer">
-      <div class="ob-dots">
-        <span
+    <main class="ob-slide" aria-live="polite">
+      <div class="ob-art">
+        <img class="ob-main-image" [src]="slides[index].image" [alt]="slides[index].imageAlt">
+        <img class="ob-secondary-image" [src]="slides[index].secondaryImage" alt="" aria-hidden="true">
+        <span class="ob-art-badge">{{ slides[index].badge }}</span>
+      </div>
+
+      <div class="ob-copy">
+        <span class="eyebrow">{{ slides[index].eyebrow }}</span>
+        <h1 class="display ob-title">{{ slides[index].title }}</h1>
+        <p class="ob-body">{{ slides[index].body }}</p>
+      </div>
+    </main>
+
+    <footer class="ob-footer">
+      <div class="ob-progress-row">
+        <span class="ob-step-label">0{{ index + 1 }} <span>/ 0{{ slides.length }}</span></span>
+        <div class="ob-dots" role="group" aria-label="Onboarding progress">
+          <button
           *ngFor="let s of slides; let i = index"
+          type="button"
           class="dot"
           [class.active]="i === index"
+          [attr.aria-current]="i === index ? 'step' : null"
+          [attr.aria-label]="'Go to step ' + (i + 1)"
           (click)="goto(i)">
-        </span>
+          </button>
+        </div>
       </div>
 
-      <button class="btn btn-primary" (click)="next()">
-        {{ isLast ? 'Get Started' : 'Next' }}
+      <button type="button" class="btn btn-primary ob-next" (click)="next()">
+        <span>{{ isLast ? 'Get Started' : 'Next' }}</span>
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
       </button>
-
-      <div class="center skip-row">
-        <span class="link" (click)="skip()">Skip</span>
-      </div>
-    </div>
-
+    </footer>
   </div>
 </ion-content>

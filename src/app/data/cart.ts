@@ -90,19 +90,32 @@ export function getCartDetailed(): DetailedCartItem[] {
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private readonly _items = signal<CartItem[]>(getCart());
+  private readonly _buyNowItems = signal<CartItem[] | null>(null);
   readonly items = this._items.asReadonly();
+  readonly buyNowItems = this._buyNowItems.asReadonly();
   readonly lines = computed<CartLine[]>(() =>
     this._items().flatMap((item, index) => {
       const product = PRODUCTS.find((candidate) => candidate.id === item.id);
       return product ? [{ index, item, product, lineTotal: product.price * item.qty }] : [];
     })
   );
+  readonly checkoutItems = computed(() => this._buyNowItems() ?? this._items());
+  readonly checkoutLines = computed<CartLine[]>(() =>
+    this.checkoutItems().flatMap((item, index) => {
+      const product = PRODUCTS.find((candidate) => candidate.id === item.id);
+      return product ? [{ index, item, product, lineTotal: product.price * item.qty }] : [];
+    })
+  );
+  readonly checkoutSubtotal = computed(() =>
+    this.checkoutLines().reduce((sum, line) => sum + line.lineTotal, 0)
+  );
+  readonly isBuyNowCheckout = computed(() => this._buyNowItems() !== null);
   readonly count = computed(() => this._items().reduce((sum, item) => sum + item.qty, 0));
   readonly subtotal = computed(() => this.lines().reduce((sum, line) => sum + line.lineTotal, 0));
   readonly couponCode = signal<string | null>(null);
   readonly activeCoupon = computed<Coupon | null>(() => {
     const coupon = COUPONS.find((candidate) => candidate.code === this.couponCode());
-    return coupon && this.subtotal() >= coupon.minSpend ? coupon : null;
+    return coupon && this.checkoutSubtotal() >= coupon.minSpend ? coupon : null;
   });
   readonly discount = computed(() => this.activeCoupon()?.value ?? 0);
 
@@ -110,6 +123,18 @@ export class CartService {
     addToCart(id, qty, variant);
     this.refresh();
   }
+
+  beginBuyNow(id: string, qty = 1, variant = ''): void {
+    const product = PRODUCTS.find((candidate) => candidate.id === id);
+    if (!product) return;
+    this._buyNowItems.set([{
+      id,
+      qty: Math.max(1, Math.floor(qty)),
+      variant: variant || product.variants[0],
+    }]);
+  }
+
+  clearBuyNow(): void { this._buyNowItems.set(null); }
 
   changeQty(index: number, delta: number): void {
     changeCartQty(index, delta);
@@ -123,6 +148,7 @@ export class CartService {
 
   clear(): void {
     clearCart();
+    this.clearBuyNow();
     this.couponCode.set(null);
     this.refresh();
   }
@@ -131,7 +157,7 @@ export class CartService {
     const code = raw.trim().toUpperCase();
     const coupon = COUPONS.find((candidate) => candidate.code === code);
     if (!coupon) return 'Invalid or expired code.';
-    if (this.subtotal() < coupon.minSpend) {
+    if (this.checkoutSubtotal() < coupon.minSpend) {
       return `Spend at least ₱${coupon.minSpend.toLocaleString('en-PH')} to use ${coupon.code}.`;
     }
     this.couponCode.set(code);

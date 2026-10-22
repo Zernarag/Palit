@@ -31,6 +31,11 @@ export const routes: Routes = [
   { path: 'search',                         loadComponent: () => import('./shop/search/search.page').then(m => m.SearchPage) },
   { path: 'search-results',                 loadComponent: () => import('./shop/search-results/search-results.page').then(m => m.SearchResultsPage) },
   { path: 'wishlist',                       loadComponent: () => import('./shop/wishlist/wishlist.page').then(m => m.WishlistPage) },
+  { path: 'swap-create/product/:productId',  loadComponent: () => import('./swap/swap-create/swap-create.page').then(m => m.SwapCreatePage) },
+  { path: 'swap-create/from-swaps',          loadComponent: () => import('./swap/swap-create/swap-create.page').then(m => m.SwapCreatePage) },
+  { path: 'swap-create/from-profile',        loadComponent: () => import('./swap/swap-create/swap-create.page').then(m => m.SwapCreatePage) },
+  { path: 'swaps/from-profile',              loadComponent: () => import('./swap/swap-requests/swap-requests.page').then(m => m.SwapRequestsPage) },
+  { path: 'swaps',                           loadComponent: () => import('./swap/swap-requests/swap-requests.page').then(m => m.SwapRequestsPage) },
 
   // ---------- AUCTION ----------
   { path: 'auction-detail/:id',             loadComponent: () => import('./auction/auction-detail/auction-detail.page').then(m => m.AuctionDetailPage) },

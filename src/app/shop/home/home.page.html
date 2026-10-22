@@ -71,6 +71,7 @@
               <span class="pimg-wrap">
                 <img [src]="p.img" [alt]="p.name" loading="lazy">
                 <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+                <span class="badge swap-availability-badge" *ngIf="p.swapAvailable"><svg class="icon" aria-hidden="true"><use href="#icon-swap-horizontal"/></svg>For Swap</span>
               </span>
               <span class="pbody">
                 <span class="pname">{{ p.name }}</span>
@@ -101,6 +102,7 @@
               <span class="pimg-wrap">
                 <img [src]="p.img" [alt]="p.name" loading="lazy">
                 <span class="badge pbadge" [ngClass]="p.badge?.cls" *ngIf="p.badge">{{ p.badge.txt }}</span>
+                <span class="badge swap-availability-badge" *ngIf="p.swapAvailable"><svg class="icon" aria-hidden="true"><use href="#icon-swap-horizontal"/></svg>For Swap</span>
               </span>
               <span class="pbody">
                 <span class="pname"><span class="mall-tag" *ngIf="p.mall">Mall</span>{{ p.name }}</span>

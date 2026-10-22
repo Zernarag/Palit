@@ -29,7 +29,7 @@ export class CouponsPage {
 
   back(): void { this.backNavigation.back('/checkout'); }
   continue(): void { this.router.navigateByUrl('/address'); }
-  eligible(minSpend: number): boolean { return this.cart.subtotal() >= minSpend; }
+  eligible(minSpend: number): boolean { return this.cart.checkoutSubtotal() >= minSpend; }
 
   apply(code = this.couponInput): void {
     this.checkout.applyCoupon(code);

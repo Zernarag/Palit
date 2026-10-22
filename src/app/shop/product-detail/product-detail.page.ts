@@ -56,8 +56,11 @@ export class ProductDetailPage implements OnInit {
     this.cartCount = this.cart.count();
   }
   buyNow(): void {
-    this.cart.add(this.product.id, this.qty, this.selectedVariant);
+    this.cart.beginBuyNow(this.product.id, this.qty, this.selectedVariant);
     this.router.navigate(['/checkout']);
+  }
+  offerSwap(): void {
+    this.router.navigate(['/swap-create/product', this.product.id]);
   }
   openRelated(id: string): void { this.router.navigate(['/product-detail', id]); }
   openReviews(): void { this.router.navigate(['/reviews', this.product.id]); }

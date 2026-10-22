@@ -26,7 +26,7 @@ export class PaymentConfirmationPage {
   back(): void { this.backNavigation.back('/checkout'); }
 
   confirm(): void {
-    if (!this.cart.lines().length) {
+    if (!this.cart.checkoutLines().length) {
       this.router.navigateByUrl('/cart');
       return;
     }

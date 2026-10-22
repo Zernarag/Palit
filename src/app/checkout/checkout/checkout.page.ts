@@ -23,8 +23,14 @@ export class CheckoutPage {
   readonly checkout = inject(CheckoutService);
   readonly peso = peso;
 
-  back(): void { this.backNavigation.back('/cart'); }
-  goCart(): void { this.router.navigateByUrl('/cart'); }
+  back(): void {
+    this.cart.clearBuyNow();
+    this.backNavigation.back('/cart');
+  }
+  goCart(): void {
+    this.cart.clearBuyNow();
+    this.router.navigateByUrl('/cart');
+  }
   editCoupons(): void { this.router.navigateByUrl('/coupons'); }
   editAddress(): void { this.router.navigateByUrl('/address'); }
   editPayment(): void { this.router.navigateByUrl('/payment-method'); }

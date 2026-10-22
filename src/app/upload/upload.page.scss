@@ -103,15 +103,20 @@
 /* ---------- Segment Cards (Listing Type) ---------- */
 .segment-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .segment-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px;
+  grid-template-areas:
+    'icon radio'
+    'content content';
+  align-items: start;
+  gap: 12px;
+  min-height: 148px;
+  padding: 14px;
   background: var(--card);
   border: 1.5px solid var(--line);
   border-radius: var(--r-md);
@@ -147,6 +152,7 @@
 }
 
 .segment-card-icon {
+  grid-area: icon;
   width: 36px;
   height: 36px;
   border-radius: var(--r-sm);
@@ -165,26 +171,30 @@
 }
 
 .segment-card-content {
-  flex: 1;
+  grid-area: content;
   min-width: 0;
 }
 
 .segment-card-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--ink);
   line-height: 1.2;
 }
 
 .segment-card-desc {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ink-faint);
-  line-height: 1.3;
+  line-height: 1.4;
   margin-top: 2px;
   white-space: normal;
 }
 
 .segment-radio {
+  grid-area: radio;
+  justify-self: end;
+  align-self: center;
+  margin-top: 9px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -210,11 +220,13 @@
 /* ---------- Photo Dropzone & Grid ---------- */
 .upload-dropzone {
   display: flex;
+  width: 100%;
+  min-height: 160px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 32px 16px;
+  gap: 12px;
+  padding: 28px 20px;
   border: 2px dashed var(--line);
   border-radius: var(--r-md);
   background: var(--card);
@@ -234,8 +246,9 @@
 }
 
 .dropzone-icon-wrap {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
   border-radius: 50%;
   background: var(--palm-light);
   color: var(--palm-dark);
@@ -262,6 +275,10 @@
   color: var(--ink);
 }
 
+.dropzone-text .small {
+  line-height: 1.4;
+}
+
 .upload-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -283,6 +300,7 @@
 
   &.empty {
     border: 2px dashed var(--line);
+    border-radius: var(--r-md);
     background: var(--card);
     color: var(--ink-faint);
 

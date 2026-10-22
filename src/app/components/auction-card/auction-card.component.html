@@ -3,8 +3,8 @@
   <div class="aimg-wrap">
     <img [src]="auction.img" [alt]="auction.name" loading="lazy">
 
-    <span class="countdown-chip" [class.ending]="isEnding">
-      {{ countdown }}
+    <span class="countdown-chip" [class.ending]="isEnding()">
+      {{ countdown() }}
     </span>
 
     <button class="watch-btn"

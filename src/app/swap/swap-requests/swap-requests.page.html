@@ -1,0 +1,137 @@
+<ion-content [fullscreen]="true" class="page-content swap-page">
+
+  <header class="topbar bordered">
+    <button type="button" class="iconbtn" aria-label="Go back" (click)="back()">
+      <svg class="icon" aria-hidden="true"><use href="#icon-back"/></svg>
+    </button>
+    <div class="topbar-title-group">
+      <h1 class="topbar-title">Swaps</h1>
+      <span class="faint small">Trade items with other users — no cash needed</span>
+    </div>
+    @if (pendingCount > 0) {
+      <span class="pending-pill">{{ pendingCount }} pending</span>
+    }
+  </header>
+
+  <div class="section swap-shell">
+
+    <!-- ============ SEGMENTS ============ -->
+    <div class="swap-segments">
+      <button
+        type="button"
+        class="swap-segment"
+        [class.active]="activeTab === 'incoming'"
+        (click)="setTab('incoming')">
+        Incoming
+        @if (incoming.length) { <span class="count">{{ incoming.length }}</span> }
+      </button>
+      <button
+        type="button"
+        class="swap-segment"
+        [class.active]="activeTab === 'sent'"
+        (click)="setTab('sent')">
+        Sent
+        @if (sent.length) { <span class="count">{{ sent.length }}</span> }
+      </button>
+      <button
+        type="button"
+        class="swap-segment"
+        [class.active]="activeTab === 'closed'"
+        (click)="setTab('closed')">
+        Closed
+        @if (closed.length) { <span class="count">{{ closed.length }}</span> }
+      </button>
+    </div>
+
+    <!-- ============ EMPTY STATE ============ -->
+    @if (!visible.length) {
+      <div class="empty-state swap-empty">
+        <div class="empty-icon-wrap">
+          <svg class="icon icon-lg"><use href="#icon-swap-horizontal"/></svg>
+        </div>
+        <b>{{ swapEmptyTitle }}</b>
+        <div class="small muted">{{ swapEmptyBody }}</div>
+        <button class="btn btn-primary btn-sm empty-cta" (click)="goUpload()">
+          Create a Swap Offer
+        </button>
+      </div>
+    }
+
+    <!-- ============ REQUEST CARDS ============ -->
+    @for (req of visible; track req.id) {
+      <article class="swap-card card">
+
+        <div class="swap-card-top">
+          <span class="swap-status" [ngClass]="statusClass(req.status)">
+            {{ statusLabel(req.status) }}
+          </span>
+          <span class="small faint">{{ timeAgo(req.createdAt) }}</span>
+        </div>
+
+        <div class="swap-parties">
+          <div class="swap-party">
+            <span class="party-label">They offer</span>
+            <div class="party-thumb">
+              @if (coverPhoto(req)) {
+                <img [src]="coverPhoto(req)" [alt]="req.title">
+              } @else {
+                <svg class="icon"><use href="#icon-tag"/></svg>
+              }
+            </div>
+            <b class="party-name">{{ req.title }}</b>
+            <span class="small faint">from {{ req.requestedBy }}</span>
+          </div>
+
+          <div class="swap-arrow">
+            <svg class="icon"><use href="#icon-swap-horizontal"/></svg>
+          </div>
+
+          <div class="swap-party">
+            <span class="party-label">For your</span>
+            <div class="party-thumb">
+              @if (wantedImg(req)) {
+                <img [src]="wantedImg(req)" [alt]="wantedLabel(req)">
+              } @else {
+                <svg class="icon"><use href="#icon-tag"/></svg>
+              }
+            </div>
+            <b class="party-name">{{ wantedLabel(req) }}</b>
+            <span class="small faint">you own this</span>
+          </div>
+        </div>
+
+        <p class="swap-desc">{{ req.description }}</p>
+
+        @if (req.terms) {
+          <div class="swap-terms">
+            <svg class="icon icon-xs"><use href="#icon-shield"/></svg>
+            <span>{{ req.terms }}</span>
+          </div>
+        }
+
+        <!-- ===== ACTIONS ===== -->
+        @if (req.status === 'pending') {
+          <div class="swap-actions">
+            <button class="btn btn-ghost btn-sm" (click)="decline(req.id, $event)">
+              Decline
+            </button>
+            <button class="btn btn-primary btn-sm" (click)="accept(req.id, $event)">
+              <svg class="icon icon-sm"><use href="#icon-check"/></svg>
+              Accept Swap
+            </button>
+          </div>
+        } @else {
+          <div class="swap-actions">
+            <span class="small faint closed-note">
+              {{ req.status === 'accepted' ? 'Swap agreed — coordinate the exchange in Messages.' : 'Offer declined.' }}
+            </span>
+            <button class="iconbtn sm" (click)="remove(req.id, $event)" aria-label="Remove">
+              <svg class="icon icon-sm"><use href="#icon-trash"/></svg>
+            </button>
+          </div>
+        }
+      </article>
+    }
+
+  </div>
+</ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
@@ -26,7 +26,7 @@ export class AuctionListPage implements OnInit, OnDestroy {
   filterId = 'all';
   auctions: Auction[] = [];
   cartCount = 0;
-  now = Date.now();
+  readonly now = signal(Date.now());
   private ticker: ReturnType<typeof setInterval> | undefined;
 
   formatPrice = formatPrice;
@@ -39,7 +39,7 @@ export class AuctionListPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.applyFilter();
-    this.ticker = setInterval(() => this.now = Date.now(), 1000);
+    this.ticker = setInterval(() => this.now.set(Date.now()), 1000);
   }
 
   ngOnDestroy(): void {
@@ -86,7 +86,7 @@ export class AuctionListPage implements OnInit, OnDestroy {
   }
 
   isEnding(a: Auction): boolean {
-    return a.endTime - Date.now() < 60 * 60e3;
+    return a.endTime - this.now() < 60 * 60e3;
   }
 
   openAuction(id: string): void {

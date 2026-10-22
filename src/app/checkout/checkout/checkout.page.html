@@ -4,7 +4,7 @@
 </header>
 
 <ion-content>
-  @if (!cart.lines().length) {
+  @if (!cart.checkoutLines().length) {
     <div class="empty-state empty">
       <div class="empty-emoji"><app-icon name="cart" /></div>
       <b>Nothing to check out</b>
@@ -52,7 +52,7 @@
           <button type="button" class="link small" (click)="goCart()">Edit cart</button>
         </div>
         <div class="card pad item-list">
-          @for (line of cart.lines(); track line.index) {
+          @for (line of cart.checkoutLines(); track line.index) {
             <div class="order-line">
               <img [src]="line.product.img" [alt]="line.product.name" />
               <div class="line-copy">
@@ -70,7 +70,7 @@
           <button type="button" class="link small" (click)="editCoupons()">Coupons</button>
         </div>
         <div class="card pad totals">
-          <div class="row between small"><span class="muted">Merchandise subtotal</span><span>{{ peso(cart.subtotal()) }}</span></div>
+          <div class="row between small"><span class="muted">Merchandise subtotal</span><span>{{ peso(cart.checkoutSubtotal()) }}</span></div>
           <div class="row between small"><span class="muted">Shipping fee</span><span>{{ peso(checkout.shipping()) }}</span></div>
           @if (checkout.giftFee() > 0) {
             <div class="row between small"><span class="muted">Gift wrap</span><span>{{ peso(checkout.giftFee()) }}</span></div>
@@ -86,7 +86,7 @@
   }
 </ion-content>
 
-@if (cart.lines().length) {
+@if (cart.checkoutLines().length) {
   <footer class="bottom-bar">
     <div class="place-row">
       <div class="place-total"><span class="small muted">Total</span><span class="price-tag total">{{ peso(checkout.total()) }}</span></div>
